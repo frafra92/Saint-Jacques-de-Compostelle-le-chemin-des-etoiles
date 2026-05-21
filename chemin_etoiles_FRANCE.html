@@ -228,37 +228,21 @@ button.nb.show{display:block}
     <div style="display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:20px">
       <!-- Coquille Conseil de l'Europe -->
       <svg width="78" height="78" viewBox="0 0 100 100" style="filter:drop-shadow(0 0 16px rgba(212,168,67,.5));animation:bob 4s ease-in-out infinite;flex-shrink:0">
-        <!-- Fond bleu roi avec coins arrondis -->
         <rect width="100" height="100" rx="14" fill="#003399"/>
-        <!-- Corps de la coquille : éventail de 13 côtes rayonnant depuis la charnière -->
-        <!-- Base arrondie de la coquille -->
-        <path d="M50 72 Q20 72 12 58 Q6 46 8 34 Q10 22 20 16 Q30 10 50 10 Q70 10 80 16 Q90 22 92 34 Q94 46 88 58 Q80 72 50 72Z" fill="#FFD700" opacity="0.15"/>
-        <!-- 13 côtes rayonnantes depuis le point de charnière (50,72) -->
+        <!-- 9 rayons droits depuis le point (50,72) vers le haut en éventail -->
         <g stroke="#FFD700" stroke-linecap="round" fill="none">
-          <!-- Côtes principales larges -->
-          <path d="M50,72 Q38,55 18,22" stroke-width="3.5" opacity="0.9"/>
-          <path d="M50,72 Q40,52 24,16" stroke-width="3.5" opacity="0.9"/>
-          <path d="M50,72 Q44,50 32,11" stroke-width="3.5" opacity="0.9"/>
-          <path d="M50,72 Q48,49 43,10" stroke-width="3.5" opacity="0.9"/>
-          <path d="M50,72 Q50,49 50,10" stroke-width="4" opacity="1"/>
-          <path d="M50,72 Q52,49 57,10" stroke-width="3.5" opacity="0.9"/>
-          <path d="M50,72 Q56,50 68,11" stroke-width="3.5" opacity="0.9"/>
-          <path d="M50,72 Q60,52 76,16" stroke-width="3.5" opacity="0.9"/>
-          <path d="M50,72 Q62,55 82,22" stroke-width="3.5" opacity="0.9"/>
-          <!-- Côtes secondaires fines entre les principales -->
-          <path d="M50,72 Q36,58 14,38" stroke-width="1.5" opacity="0.5"/>
-          <path d="M50,72 Q42,54 28,22" stroke-width="1.5" opacity="0.5"/>
-          <path d="M50,72 Q58,54 72,22" stroke-width="1.5" opacity="0.5"/>
-          <path d="M50,72 Q64,58 86,38" stroke-width="1.5" opacity="0.5"/>
+          <line x1="50" y1="72" x2="14" y2="18" stroke-width="6"/>
+          <line x1="50" y1="72" x2="25" y2="11" stroke-width="6"/>
+          <line x1="50" y1="72" x2="36" y2="8"  stroke-width="6"/>
+          <line x1="50" y1="72" x2="50" y2="8"  stroke-width="6"/>
+          <line x1="50" y1="72" x2="64" y2="8"  stroke-width="6"/>
+          <line x1="50" y1="72" x2="75" y2="11" stroke-width="6"/>
+          <line x1="50" y1="72" x2="86" y2="18" stroke-width="6"/>
+          <line x1="50" y1="72" x2="93" y2="32" stroke-width="6"/>
+          <line x1="50" y1="72" x2="7"  y2="32" stroke-width="6"/>
         </g>
-        <!-- Contour de l'éventail -->
-        <path d="M50 72 Q20 72 12 58 Q6 46 8 34 Q10 22 20 16 Q30 10 50 10 Q70 10 80 16 Q90 22 92 34 Q94 46 88 58 Q80 72 50 72Z" fill="none" stroke="#FFD700" stroke-width="2.5" opacity="0.8"/>
-        <!-- Base festonnée de la coquille (5 festons) -->
-        <path d="M22,70 Q26,78 30,72 Q34,80 38,73 Q42,81 46,74 Q50,82 54,74 Q58,81 62,73 Q66,80 70,72 Q74,78 78,70" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- Point central de la charnière -->
-        <circle cx="50" cy="72" r="4" fill="#FFD700"/>
-        <!-- Reflet lumineux discret -->
-        <ellipse cx="42" cy="35" rx="8" ry="3" fill="#ffffff" opacity="0.08" transform="rotate(-30,42,35)"/>
+        <!-- Demi-cercle plein jaune en bas (corps de la coquille) -->
+        <path d="M14,72 A36,36 0 0,0 86,72 Z" fill="#FFD700"/>
       </svg>
       <div>
         <div style="font-family:'Cinzel',serif;font-size:clamp(26px,5vw,50px);color:var(--orl);letter-spacing:4px;text-shadow:0 0 30px rgba(212,168,67,.4);margin-bottom:6px">Le Chemin des Étoiles</div>
@@ -452,19 +436,17 @@ button.nb.show{display:block}
           <svg width="32" height="32" viewBox="0 0 100 100">
           <rect width="100" height="100" rx="10" fill="#003399"/>
           <g stroke="#FFD700" stroke-linecap="round" fill="none">
-            <path d="M50,72 Q38,55 18,22" stroke-width="4" opacity="0.9"/>
-            <path d="M50,72 Q40,52 24,16" stroke-width="4" opacity="0.9"/>
-            <path d="M50,72 Q44,50 32,11" stroke-width="4" opacity="0.9"/>
-            <path d="M50,72 Q48,49 43,10" stroke-width="4" opacity="0.9"/>
-            <path d="M50,72 Q50,49 50,10" stroke-width="4.5" opacity="1"/>
-            <path d="M50,72 Q52,49 57,10" stroke-width="4" opacity="0.9"/>
-            <path d="M50,72 Q56,50 68,11" stroke-width="4" opacity="0.9"/>
-            <path d="M50,72 Q60,52 76,16" stroke-width="4" opacity="0.9"/>
-            <path d="M50,72 Q62,55 82,22" stroke-width="4" opacity="0.9"/>
+            <line x1="50" y1="72" x2="14" y2="18" stroke-width="7"/>
+            <line x1="50" y1="72" x2="25" y2="11" stroke-width="7"/>
+            <line x1="50" y1="72" x2="36" y2="8"  stroke-width="7"/>
+            <line x1="50" y1="72" x2="50" y2="8"  stroke-width="7"/>
+            <line x1="50" y1="72" x2="64" y2="8"  stroke-width="7"/>
+            <line x1="50" y1="72" x2="75" y2="11" stroke-width="7"/>
+            <line x1="50" y1="72" x2="86" y2="18" stroke-width="7"/>
+            <line x1="50" y1="72" x2="93" y2="32" stroke-width="7"/>
+            <line x1="50" y1="72" x2="7"  y2="32" stroke-width="7"/>
           </g>
-          <path d="M50 72 Q20 72 12 58 Q6 46 8 34 Q10 22 20 16 Q30 10 50 10 Q70 10 80 16 Q90 22 92 34 Q94 46 88 58 Q80 72 50 72Z" fill="none" stroke="#FFD700" stroke-width="3" opacity="0.8"/>
-          <path d="M26,70 Q30,78 34,72 Q38,80 42,73 Q46,81 50,74 Q54,81 58,73 Q62,80 66,72 Q70,78 74,70" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="50" cy="72" r="4.5" fill="#FFD700"/>
+          <path d="M14,72 A36,36 0 0,0 86,72 Z" fill="#FFD700"/>
         </svg>
           <div style="font-size:9px;color:var(--ord);font-family:'Cinzel',serif;text-align:center">Coquille<br>Conseil de l'Europe</div>
         </div>

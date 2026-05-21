@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Le Chemin des Étoiles 🐚 — Paris → Santiago de Compostela</title>
+<meta name="description" content="Jeu de quiz pèlerinage : Paris → Santiago de Compostela. 26 étapes, 1700 km, 1400 questions. Gratuit, sans inscription.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #060300;
+    --b1: #0d0800;
+    --b2: #130c00;
+    --b3: #2a1f0a;
+    --or: #c9a84c;
+    --orl: #e8c96a;
+    --ord: #7a5e28;
+    --bleu: #003399;
+    --rad: 12px;
+  }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: #d4b896;
+    font-family: 'Jost', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: radial-gradient(ellipse at 50% 20%, #1a0e00 0%, #060300 65%);
+    padding: 60px 20px 50px;
+    text-align: center;
+    border-bottom: 1px solid var(--b3);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .hero-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 6vw, 58px);
+    color: var(--orl);
+    letter-spacing: 4px;
+    text-shadow: 0 0 40px rgba(201,168,76,.35);
+    margin-bottom: 8px;
+  }
+  .hero-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--ord);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .hero-route {
+    font-size: 15px;
+    color: #a07840;
+    line-height: 2;
+    margin: 20px 0;
+  }
+  .hero-route em { color: #5a3e18; font-size: 13px; }
+
+  .hero-dedi {
+    font-size: 13px;
+    color: var(--ord);
+    font-style: italic;
+    border: 1px solid var(--b3);
+    border-radius: var(--rad);
+    padding: 10px 20px;
+    display: inline-block;
+    margin-bottom: 0;
+  }
+
+  /* ── STATS ── */
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    background: var(--b1);
+    border-bottom: 1px solid var(--b3);
+  }
+  .stat {
+    padding: 20px 28px;
+    text-align: center;
+    border-right: 1px solid var(--b3);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-n {
+    font-family: 'Cinzel', serif;
+    font-size: 26px;
+    color: var(--orl);
+    display: block;
+  }
+  .stat-l {
+    font-size: 11px;
+    color: var(--ord);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  /* ── BOUTONS JEU ── */
+  .jeu-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 20px;
+  }
+  .jeu-titre {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    color: var(--ord);
+    letter-spacing: 3px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .jeu-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  .jeu-card {
+    background: linear-gradient(135deg, var(--b1), #0f0900);
+    border: 1px solid var(--b3);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color .2s, transform .15s, box-shadow .2s;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+  .jeu-card:hover {
+    border-color: var(--or);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(201,168,76,.12);
+  }
+  .jeu-card-flag {
+    font-size: 40px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .jeu-card-titre {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    color: var(--orl);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .jeu-card-sous {
+    font-size: 12px;
+    color: var(--ord);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .jeu-card-route {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: #a07840;
+    font-style: italic;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+  .jeu-card-infos {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .badge {
+    background: var(--b2);
+    border: 1px solid var(--b3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--ord);
+  }
+  .badge strong { color: var(--or); }
+  .jeu-card-btn {
+    display: inline-block;
+    background: var(--or);
+    color: #060300;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 11px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background .15s, transform .1s;
+  }
+  .jeu-card:hover .jeu-card-btn {
+    background: var(--orl);
+  }
+  .jeu-card-note {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(201,168,76,.12);
+    border: 1px solid var(--b3);
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--ord);
+  }
+  .jeu-card.espagne .jeu-card-btn {
+    background: #c60b1e;
+    color: #f1bf00;
+  }
+  .jeu-card.espagne:hover .jeu-card-btn {
+    background: #e00d24;
+  }
+
+  /* ── RÈGLES ── */
+  .regles {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px 48px;
+  }
+  .regles-box {
+    background: linear-gradient(135deg, #0d0800, #1a0e00);
+    border: 1px solid var(--b3);
+    border-radius: 16px;
+    padding: 32px 24px;
+  }
+  .regles-titre {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    color: var(--orl);
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .regles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .regle {
+    background: rgba(255,255,255,.03);
+    border: 1px solid var(--b3);
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .regle-ico { font-size: 20px; flex-shrink: 0; }
+  .regle-titre {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--or);
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+  .regle-txt { font-size: 13px; color: #9a7a52; line-height: 1.5; }
+
+  /* ── CHEMIN PROGRESS ── */
+  .chemin {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px 48px;
+  }
+  .chemin-titre {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    color: var(--ord);
+    letter-spacing: 3px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .chemin-bar {
+    background: var(--b1);
+    border: 1px solid var(--b3);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+  .chemin-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--ord);
+    margin-bottom: 8px;
+  }
+  .chemin-label strong { color: var(--or); }
+  .chemin-track {
+    background: var(--b2);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .chemin-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--or), var(--orl));
+  }
+  .chemin-pts {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #5a3e18;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 24px 20px;
+    font-size: 12px;
+    color: #3a2a10;
+    border-top: 1px solid var(--b3);
+  }
+  footer a { color: var(--ord); text-decoration: none; }
+
+  @keyframes bob {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-logo">
+    <!-- Coquille officielle Camino de Santiago -->
+    <svg width="80" height="80" viewBox="0 0 100 100" style="filter:drop-shadow(0 0 16px rgba(201,168,76,.5));animation:bob 4s ease-in-out infinite;flex-shrink:0">
+      <rect width="100" height="100" rx="14" fill="#003399"/>
+      <g stroke="#FFD700" stroke-linecap="round" fill="none">
+        <line x1="50" y1="72" x2="14" y2="18" stroke-width="6"/>
+        <line x1="50" y1="72" x2="25" y2="11" stroke-width="6"/>
+        <line x1="50" y1="72" x2="36" y2="8"  stroke-width="6"/>
+        <line x1="50" y1="72" x2="50" y2="8"  stroke-width="6"/>
+        <line x1="50" y1="72" x2="64" y2="8"  stroke-width="6"/>
+        <line x1="50" y1="72" x2="75" y2="11" stroke-width="6"/>
+        <line x1="50" y1="72" x2="86" y2="18" stroke-width="6"/>
+        <line x1="50" y1="72" x2="93" y2="32" stroke-width="6"/>
+        <line x1="50" y1="72" x2="7"  y2="32" stroke-width="6"/>
+      </g>
+      <path d="M14,72 A36,36 0 0,0 86,72 Z" fill="#FFD700"/>
+    </svg>
+    <div>
+      <h1>Le Chemin des Étoiles</h1>
+      <div class="hero-sub">Via Turonensis · GR655 · Paris → Santiago</div>
+    </div>
+  </div>
+
+  <div class="hero-route">
+    Paris · Chartres · Tours · Poitiers · Bordeaux<br>
+    Pampelune · Burgos · León · O Cebreiro · Santiago de Compostela<br>
+    <em>26 étapes · ~1 700 km · Pèlerinage depuis le Xe siècle</em>
+  </div>
+
+  <div class="hero-dedi">
+    ✦ Dédié à tous ceux qui ont marché,<br>et à ceux qui marchent encore dans leur cœur ✦
+  </div>
+</div>
+
+<!-- ── STATS ── -->
+<div class="stats">
+  <div class="stat"><span class="stat-n">26</span><span class="stat-l">Étapes</span></div>
+  <div class="stat"><span class="stat-n">1 700</span><span class="stat-l">Kilomètres</span></div>
+  <div class="stat"><span class="stat-n">1 404</span><span class="stat-l">Questions</span></div>
+  <div class="stat"><span class="stat-n">16</span><span class="stat-l">Thèmes</span></div>
+  <div class="stat"><span class="stat-n">🆓</span><span class="stat-l">Gratuit</span></div>
+</div>
+
+<!-- ── LES DEUX JEUX ── -->
+<div class="jeu-section">
+  <div class="jeu-titre">Choisissez votre chemin</div>
+
+  <div class="jeu-cards">
+
+    <!-- FRANCE -->
+    <a class="jeu-card" href="chemin_etoiles_FRANCE.html">
+      <div class="jeu-card-note">🇫🇷 20 étapes</div>
+      <span class="jeu-card-flag">🇫🇷</span>
+      <div class="jeu-card-titre">La France</div>
+      <div class="jeu-card-sous">Via Turonensis · GR655</div>
+      <div class="jeu-card-route">Paris → Roncevaux<br>Le grand chemin médiéval</div>
+      <div class="jeu-card-infos">
+        <span class="badge"><strong>20</strong> étapes</span>
+        <span class="badge"><strong>~911 km</strong></span>
+        <span class="badge"><strong>1 130</strong> questions</span>
+      </div>
+      <div class="jeu-card-btn">Commencer ›</div>
+    </a>
+
+    <!-- ESPAGNE -->
+    <a class="jeu-card espagne" href="chemin_etoiles_ESPAGNE.html">
+      <div class="jeu-card-note">🇪🇸 6 étapes</div>
+      <span class="jeu-card-flag">🇪🇸</span>
+      <div class="jeu-card-titre">L'Espagne</div>
+      <div class="jeu-card-sous">Camino Francés · GR65</div>
+      <div class="jeu-card-route">Roncevaux → Santiago<br>Le Camino Francés espagnol</div>
+      <div class="jeu-card-infos">
+        <span class="badge"><strong>6</strong> étapes</span>
+        <span class="badge"><strong>~790 km</strong></span>
+        <span class="badge"><strong>274</strong> questions</span>
+      </div>
+      <div class="jeu-card-btn" style="background:#c60b1e;color:#f1bf00">¡Empezar! ›</div>
+    </a>
+
+  </div>
+
+  <!-- Chemin visuel Paris → Santiago -->
+  <div class="chemin">
+    <div class="chemin-titre">Le chemin complet — Paris → Santiago</div>
+
+    <div class="chemin-bar">
+      <div class="chemin-label">
+        <span>🇫🇷 France — 20 étapes</span>
+        <strong>~911 km · 1 130 questions</strong>
+      </div>
+      <div class="chemin-track"><div class="chemin-fill" style="width:54%"></div></div>
+      <div class="chemin-pts">
+        <span>⛪ Paris</span>
+        <span>🏰 Chartres · Tours · Poitiers · Bordeaux</span>
+        <span>⛰️ Roncevaux</span>
+      </div>
+    </div>
+
+    <div class="chemin-bar">
+      <div class="chemin-label">
+        <span>🇪🇸 Espagne — 6 étapes</span>
+        <strong>~790 km · 274 questions</strong>
+      </div>
+      <div class="chemin-track"><div class="chemin-fill" style="width:46%;background:linear-gradient(90deg,#c60b1e,#e03050)"></div></div>
+      <div class="chemin-pts">
+        <span>⛰️ Roncevaux</span>
+        <span>🏰 Pampelune · Burgos · León</span>
+        <span>🌟 Santiago</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RÈGLES ── -->
+<div class="regles">
+  <div class="regles-box">
+    <div class="regles-titre">📜 Comment jouer</div>
+    <div class="regles-grid">
+      <div class="regle">
+        <div class="regle-ico">🚶</div>
+        <div>
+          <div class="regle-titre">Étape par étape</div>
+          <div class="regle-txt">Débloque les étapes dans l'ordre. Comme sur le vrai chemin.</div>
+        </div>
+      </div>
+      <div class="regle">
+        <div class="regle-ico">❓</div>
+        <div>
+          <div class="regle-titre">1 question = 1 km</div>
+          <div class="regle-txt">Bonne réponse → tu avances. Mauvaise → tu restes sur place.</div>
+        </div>
+      </div>
+      <div class="regle">
+        <div class="regle-ico">🎯</div>
+        <div>
+          <div class="regle-titre">16 thèmes mélangés</div>
+          <div class="regle-txt">Histoire · Géologie · Gastronomie · Poésie · Sciences · Peinture…</div>
+        </div>
+      </div>
+      <div class="regle">
+        <div class="regle-ico">🏅</div>
+        <div>
+          <div class="regle-titre">Sellos à collecter</div>
+          <div class="regle-txt">Un tampon unique à chaque étape terminée sur ta Credencial.</div>
+        </div>
+      </div>
+      <div class="regle">
+        <div class="regle-ico">💾</div>
+        <div>
+          <div class="regle-titre">Sauvegarde auto</div>
+          <div class="regle-txt">Ta progression est conservée. Reprends où tu t'es arrêté.</div>
+        </div>
+      </div>
+      <div class="regle">
+        <div class="regle-ico">🎭</div>
+        <div>
+          <div class="regle-titre">Rencontres</div>
+          <div class="regle-txt">Templiers, troubadours, architectes — des personnages historiques à chaque étape.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  Le Chemin des Étoiles · Jeu de quiz pèlerinage · Paris → Santiago de Compostela<br>
+  <span style="color:#2a1a08">Gratuit · Sans inscription · Zéro publicité</span>
+</footer>
+
+</body>
+</html>
