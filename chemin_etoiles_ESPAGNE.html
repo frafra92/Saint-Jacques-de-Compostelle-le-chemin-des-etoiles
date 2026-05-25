@@ -13,7 +13,7 @@
   --bg:#0e0900;--b1:#1c1100;--b2:#2a1804;--b3:#3a2608;--b4:#52380e;
   --gd:#0e2210;--gl2:#5aaa5a;
   --rad:8px;--radl:12px;
-  --fs:16px;--fsl:19px;--fsxl:23px;
+  --fs:17px;--fsl:21px;--fsxl:25px;
 }
 html,body{height:100%;font-family:'Lora',Georgia,serif;background:var(--bg);color:var(--p);overflow:hidden}
 #app{height:100vh;display:flex;flex-direction:column}
@@ -125,10 +125,14 @@ button.chip.found{border-color:#5a4820;background:#1e1400;color:#d4b860}
 .zm{background:#1c1500;border-bottom:1px solid #4a3c00;color:#c8a030}
 .zh{background:#1c0606;border-bottom:1px solid #4a1414;color:#c87878}
 .zx{background:#100820;border-bottom:1px solid #30184e;color:#a870d8}
-.scene-card{flex-shrink:0;padding:8px 13px 7px;border-bottom:1px solid var(--b3);background:var(--b1)}
+.scene-card{flex-shrink:0;padding:8px 13px 7px;border-bottom:1px solid var(--b3);background:var(--b1);position:relative}
+.tts-btn{position:absolute;top:6px;right:8px;background:none;border:1px solid var(--b3);border-radius:20px;padding:3px 9px;font-size:16px;color:var(--ord);cursor:pointer;transition:all .2s;z-index:5;line-height:1}
+.tts-btn:hover{border-color:var(--or);color:var(--orl)}
+.tts-btn.playing{border-color:var(--or);color:var(--orl);animation:tts-pulse 1.2s ease-in-out infinite}
+@keyframes tts-pulse{0%,100%{opacity:1}50%{opacity:.5}}
 .scene-icon{font-size:22px;float:left;margin-right:9px;margin-top:2px}
 .scene-lieu{font-family:'Cinzel',serif;font-size:11px;color:var(--ord);letter-spacing:.5px;margin-bottom:2px}
-.scene-txt{font-size:var(--fs);color:var(--pd);line-height:1.65;font-style:italic}
+.scene-txt{font-size:var(--fsl);color:var(--pd);line-height:1.7;font-style:italic}
 .rencontre-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-bottom:3px;font-style:normal;font-family:'Cinzel',serif;letter-spacing:.5px}
 .rb-templier{background:#1a0a2a;border:1px solid #5a3a8a;color:#b088dc}
 .rb-architecte{background:#0a1a2a;border:1px solid #3a5a8a;color:#80a8dc}
@@ -140,7 +144,7 @@ button.chip.found{border-color:#5a4820;background:#1e1400;color:#d4b860}
 .qmeta{font-size:11px;color:#4a3010;margin-bottom:4px}
 .qtxt{font-size:var(--fsl);color:var(--p);line-height:1.6}
 .anszone{padding:5px 13px;flex-shrink:0}
-button.qb{width:100%;text-align:left;padding:9px 13px;font-family:'Lora',serif;font-size:var(--fs);line-height:1.45;border:2px solid var(--b3);border-radius:var(--rad);background:var(--b2);color:var(--pd);cursor:pointer;transition:all .15s;margin-bottom:5px;display:block;-webkit-appearance:none}
+button.qb{width:100%;text-align:left;padding:14px 16px;font-family:'Lora',serif;font-size:var(--fsl);line-height:1.5;border:2px solid var(--b3);border-radius:var(--rad);background:var(--b2);color:var(--pd);cursor:pointer;transition:all .15s;margin-bottom:8px;display:block;-webkit-appearance:none;min-height:52px}
 button.qb:hover:not(:disabled){border-color:var(--ord);color:var(--orl);background:var(--b3)}
 button.qb.ok{background:#082008;border-color:#388038;color:#88dc88}
 button.qb.ko{background:#1c0606;border-color:#8a3030;color:#dc8888}
@@ -157,7 +161,7 @@ button.val:disabled{opacity:.5;cursor:default}
 .fb-bon{background:#082008;border:2px solid #285a28;color:#90dc90}
 .fb-mau{background:#1c0606;border:2px solid #5a2828;color:#dc9090}
 .fbtit{font-family:'Cinzel',serif;font-size:var(--fsl);font-weight:600;margin-bottom:5px}
-.fbexp{font-size:var(--fs);color:var(--pd);line-height:1.75;margin-top:7px;border-top:1px solid var(--b3);padding-top:7px}
+.fbexp{font-size:var(--fsl);color:var(--pd);line-height:1.8;margin-top:10px;border-top:1px solid var(--b3);padding-top:10px}
 .found-notif{background:#1a1400;border:1px solid #5a4820;border-radius:var(--rad);padding:9px 12px;margin-top:7px;display:none;align-items:center;gap:9px}
 .jp{background:#161000;border:1px solid #42300a;border-radius:var(--rad);padding:7px 11px;margin-top:7px;display:none}
 .jp.show{display:block}
@@ -175,7 +179,7 @@ button.jc:hover{border-color:var(--or);color:var(--orl);background:#3a2000}
 .altit{font-family:'Cinzel',serif;font-size:13px;color:var(--p);margin-bottom:2px}
 .altxt{font-size:12px;color:var(--pd);line-height:1.5}
 .nextwrap{padding:5px 13px 6px;flex-shrink:0}
-button.nb{width:100%;padding:10px;font-family:'Cinzel',serif;font-size:var(--fsl);letter-spacing:1px;border:2px solid var(--ord);border-radius:26px;background:var(--b2);color:var(--orl);cursor:pointer;display:none;transition:all .2s;-webkit-appearance:none}
+button.nb{width:100%;padding:16px;font-family:'Cinzel',serif;font-size:var(--fsl);letter-spacing:1px;border:2px solid var(--ord);border-radius:26px;background:var(--b2);color:var(--orl);cursor:pointer;display:none;transition:all .2s;-webkit-appearance:none;margin-top:8px}
 button.nb:hover{background:var(--or);color:var(--bg);border-color:var(--or)}
 button.nb.show{display:block}
 
@@ -525,7 +529,7 @@ button.nb.show{display:block}
         <svg width="20" height="20" viewBox="0 0 60 60"><rect width="60" height="60" rx="4" fill="#181200"/><polygon points="8,23 40,23 40,14 54,30 40,46 40,37 8,37" fill="#FFD700"/></svg>
       </div>
       <div>
-        <div class="fleche-txt" id="fleche-txt">Suis la flèche jaune</div>
+        <div class="fleche-txt" id="fleche-txt">Répondez pour avancer sur le chemin !</div>
         <div class="fleche-sub" id="fleche-sub">Km 0</div>
       </div>
     </div>
@@ -562,6 +566,7 @@ button.nb.show{display:block}
   <div class="CR">
     <div class="zbar zf" id="zbar"><span id="zico">🟢</span><span id="zlbl">Zone facile</span></div>
     <div class="scene-card" id="scene-card">
+      <button class="tts-btn" id="tts-btn" onclick="ttsBtnClick()" title="Lire à voix haute">🔊</button>
       <div class="rencontre-badge" id="scene-badge" style="display:none"></div>
       <span class="scene-icon" id="scene-icon">🌅</span>
       <div class="scene-lieu" id="scene-lieu">Départ</div>
@@ -647,6 +652,159 @@ button.nb.show{display:block}
 <div class="toast" id="toast"></div>
 
 <script>
+/* ═══════════════════════════════════════════════════════════════
+   SYSTÈME TTS — Web Speech API
+   Voix différentes par type de personnage
+   Chaque personnage garde sa voix tout au long du jeu
+   ═══════════════════════════════════════════════════════════════ */
+
+const TTS = (function(){
+
+  /* ── Actif ou non (bouton son global) ── */
+  let ttsEnabled = true;
+  let currentUtterance = null;
+
+  /* ── Mémorisation des voix par personnage ── */
+  const voixMemorisees = {}; // { "Un Chevalier Templier (†1307)": voiceObject, ... }
+
+  /* ── Profils de voix par TYPE ── */
+  // rate: vitesse (0.6 lent … 1.4 rapide)
+  // pitch: tonalité (0.5 grave … 2.0 aigu)
+  // lang: langue préférée pour chercher la voix
+  // gender: 'female' | 'male' | 'any'
+  const PROFILS = {
+    null:         { rate: 0.88, pitch: 1.0,  gender: 'female', lang: 'fr-FR', label: 'Narratrice' },
+    narrateur:    { rate: 0.88, pitch: 1.0,  gender: 'female', lang: 'fr-FR', label: 'Narratrice' },
+    templier:     { rate: 0.82, pitch: 0.72, gender: 'male',   lang: 'fr-FR', label: 'Templier' },
+    architecte:   { rate: 0.90, pitch: 0.85, gender: 'male',   lang: 'fr-FR', label: 'Architecte' },
+    troubadour:   { rate: 0.95, pitch: 1.05, gender: 'male',   lang: 'fr-FR', label: 'Troubadour' },
+    gueux:        { rate: 1.05, pitch: 1.15, gender: 'male',   lang: 'fr-FR', label: 'Gueux' },
+    pelerin:      { rate: 0.92, pitch: 1.0,  gender: 'any',    lang: 'fr-FR', label: 'Pèlerin' },
+    philosophe:   { rate: 0.80, pitch: 0.70, gender: 'male',   lang: 'fr-FR', label: 'Philosophe' },
+  };
+
+  /* ── Trouver la meilleure voix disponible ── */
+  function chercherVoix(profil) {
+    const voix = window.speechSynthesis.getVoices();
+    if (!voix.length) return null;
+
+    // Voix françaises uniquement
+    const fr = voix.filter(v => v.lang && v.lang.startsWith('fr'));
+    if (!fr.length) return voix[0]; // fallback
+
+    // Filtrer par genre si possible
+    // Heuristique sur le nom : noms contenant des prénoms féminins/masculins connus
+    const feminins = ['female','femme','amelie','alice','julie','marie','aurelie','thomas-fr','virginie'];
+    const masculins = ['male','homme','thomas','pierre','nicolas','remi','arnaud'];
+
+    let candidates = fr;
+    if (profil.gender === 'female') {
+      const f = fr.filter(v => feminins.some(k => v.name.toLowerCase().includes(k)));
+      if (f.length) candidates = f;
+    } else if (profil.gender === 'male') {
+      const m = fr.filter(v => masculins.some(k => v.name.toLowerCase().includes(k)));
+      if (m.length) candidates = m;
+    }
+
+    // Préférer les voix locales (plus rapides)
+    const locale = candidates.filter(v => v.localService);
+    return locale[0] || candidates[0] || fr[0];
+  }
+
+  /* ── Obtenir la voix mémorisée pour un personnage ── */
+  function getVoixPerso(personnage, type) {
+    const key = personnage || ('__type__' + type);
+    if (!voixMemorisees[key]) {
+      const profil = PROFILS[type] || PROFILS[null];
+      const voix = chercherVoix(profil);
+      voixMemorisees[key] = { voix, profil };
+    }
+    return voixMemorisees[key];
+  }
+
+  /* ── Nettoyer le texte pour la synthèse ── */
+  function nettoyerTexte(txt) {
+    return txt
+      .replace(/—/g, ',')            // tirets longs → pause
+      .replace(/\s*'([^']+)'\s*/g, ' $1 ')  // guillemets simples
+      .replace(/\s*"([^"]+)"\s*/g, ' $1 ')  // guillemets doubles
+      .replace(/\s+/g, ' ')
+      .replace(/[✦🗼⚜️🎶⛪💧📐🌅🐚]/g, '')   // supprimer emojis
+      .trim();
+  }
+
+  /* ── Lire un texte de scène ── */
+  function lireScene(sc) {
+    if (!ttsEnabled) return;
+    if (!window.speechSynthesis) return;
+
+    // Arrêter la lecture en cours
+    arreter();
+
+    // Construire le texte complet
+    let texte = '';
+    if (sc.personnage && sc.type) {
+      // Personnage : lire le nom puis le dialogue
+      texte = sc.personnage.split('·')[0].trim() + ' : ' + sc.txt;
+    } else {
+      // Narrateur : lire directement
+      texte = sc.txt;
+    }
+
+    const { voix, profil } = getVoixPerso(sc.personnage, sc.type);
+
+    const u = new SpeechSynthesisUtterance(nettoyerTexte(texte));
+    u.lang  = profil.lang;
+    u.rate  = profil.rate;
+    u.pitch = profil.pitch;
+    if (voix) u.voice = voix;
+
+    u.onstart = () => {
+      const btn = document.getElementById('tts-btn');
+      if (btn) { btn.textContent = '⏸'; btn.title = 'Arrêter la lecture'; }
+    };
+    u.onend = u.onerror = () => {
+      const btn = document.getElementById('tts-btn');
+      if (btn) { btn.textContent = '🔊'; btn.title = 'Lire à voix haute'; }
+      currentUtterance = null;
+    };
+
+    currentUtterance = u;
+    window.speechSynthesis.speak(u);
+  }
+
+  /* ── Arrêter la lecture ── */
+  function arreter() {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    currentUtterance = null;
+  }
+
+  /* ── Toggle play/pause ── */
+  function toggle(sc) {
+    if (window.speechSynthesis?.speaking) {
+      arreter();
+    } else if (sc) {
+      lireScene(sc);
+    }
+  }
+
+  /* ── Activer / désactiver ── */
+  function setEnabled(val) {
+    ttsEnabled = val;
+    if (!val) arreter();
+  }
+
+  // Précharger les voix dès que possible
+  if (window.speechSynthesis) {
+    window.speechSynthesis.onvoiceschanged = () => {
+      // Forcer le rechargement du cache voix
+      window.speechSynthesis.getVoices();
+    };
+  }
+
+  return { lireScene, arreter, toggle, setEnabled, get enabled() { return ttsEnabled; } };
+})();
+
 /* ════════════════════════════════════════════════════
    CONFIGURATION — ÉTAPES DISPONIBLES
    Pour ajouter une étape : ajouter son numéro à ETAPES_DISPO
@@ -1291,6 +1449,11 @@ function getScene(km_val){
   scenes.forEach(s=>{if(s.km<=km_val)best=s;});
   return best;
 }
+let _currentScene = null;
+function ttsBtnClick(){
+  if(window.speechSynthesis?.speaking){ TTS.arreter(); }
+  else if(_currentScene){ TTS.lireScene(_currentScene); }
+}
 function renderLieu(){
   const q=ETAPE?.questions[qIdx];
   const km_q=q?.km||km;
@@ -1303,7 +1466,7 @@ function renderLieu(){
   const fl=getFleche(km_q);
   document.getElementById("fleche-txt").textContent=fl.txt;
   document.getElementById("fleche-sub").textContent=fl.sub;
-  const sc=getScene(km_q);
+  const sc=getScene(km_q); _currentScene=sc||null;
   if(sc){
     const badge=document.getElementById("scene-badge");
     if(sc.type){
@@ -1314,6 +1477,7 @@ function renderLieu(){
     document.getElementById("scene-icon").textContent=sc.icon;
     document.getElementById("scene-lieu").textContent=sc.lieu;
     document.getElementById("scene-txt").textContent=sc.txt;
+    if(TTS.enabled) TTS.lireScene(sc);
   }
   checkKm(km);
   checkFoundItems(km);

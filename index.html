@@ -343,15 +343,20 @@ h1 {
   <div class="overlay-box">
     <div class="ico">🐚</div>
     <h2>Bienvenue, Pèlerin !</h2>
-    <p>Avant de commencer votre voyage de <strong>Paris à Santiago de Compostela</strong>, présentez-vous pour figurer au classement des pèlerins.</p>
+    <p style="font-size:17px;line-height:1.6;margin-bottom:6px">Entrez votre prénom pour figurer au classement des pèlerins.</p>
+    <p style="font-size:14px;color:#6a5030;margin-bottom:22px;background:#1a1000;border-radius:8px;padding:10px 14px;">🔒 Aucun compte requis — vos données restent sur votre appareil</p>
     <div class="field-group">
-      <input type="text" id="profil-nom" placeholder="Votre prénom ou pseudo" maxlength="30" autocomplete="given-name">
-      <input type="text" id="profil-ville" placeholder="Votre ville (ex : Paris, Lyon…)" maxlength="40" autocomplete="address-level2">
+      <input type="text" id="profil-nom" placeholder="Votre prénom ou pseudo" maxlength="30" autocomplete="given-name" style="font-size:18px;padding:14px 16px">
+      <input type="text" id="profil-ville" placeholder="Votre ville (ex : Paris, Lyon…)" maxlength="40" autocomplete="address-level2" style="font-size:18px;padding:14px 16px">
     </div>
     <button class="btn-play" onclick="saveProfil()">
       <span class="ico-btn">🚶</span> Commencer le pèlerinage
     </button>
-    <div style="font-size:13px;color:#4a3820;cursor:pointer;margin-top:8px" onclick="skipProfil()">Continuer sans s'inscrire</div>
+    <button onclick="skipProfil()" style="display:block;width:100%;margin-top:14px;padding:16px;font-size:16px;font-family:'Lora',serif;background:transparent;border:2px solid #3a2810;border-radius:12px;color:#8a6840;cursor:pointer;letter-spacing:0.3px;">
+      Jouer sans classement
+    </button>
+    <p style="font-size:12px;color:#3a2810;margin-top:10px">Vous pourrez vous inscrire plus tard depuis l'accueil</p>
+    <div style="display:none" onclick="skipProfil()">Continuer sans s'inscrire</div>
   </div>
 </div>
 
