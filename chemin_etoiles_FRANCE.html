@@ -1174,11 +1174,42 @@ async function startEtape(num){
   renderAll();
 }
 
+function showEspagneInvitation(){
+  // Afficher dans la zone de fin d'étape un message spécial + lien Espagne
+  const finTxt = document.getElementById("fin-txt");
+  const finTitre = document.getElementById("fin-titre");
+  if(finTitre) finTitre.textContent = "¡Buen Camino! — Les Pyrénées t'attendent";
+  if(finTxt) finTxt.textContent = "Tu as terminé toutes les étapes françaises. Roncevaux est à portée de pas. L'Espagne t'attend — le Camino Francés commence maintenant. ¡Ultreia!";
+  // Transformer le bouton "Étape suivante" en lien vers l'Espagne
+  const btn = document.getElementById("fin-next-btn");
+  if(btn){
+    btn.textContent = "🇪🇸 Continuer vers l'Espagne →";
+    btn.onclick = () => { window.location.href = "chemin_etoiles_ESPAGNE.html"; };
+    btn.style.display = "block";
+    btn.style.background = "linear-gradient(135deg,#c8a84b,#8a6020)";
+    btn.style.color = "#0e0900";
+    btn.style.border = "none";
+    btn.style.fontWeight = "700";
+    btn.style.fontSize = "18px";
+    btn.style.padding = "16px 24px";
+  }
+}
+
 function startNextEtape(){
   const next = ETAPES_DISPO.find(n => n > etapeNum);
-  if(next && isEtapeJouable(next)) startEtape(next);
-  else if(next) toast("⏳ L'étape suivante sera débloquée une fois celle-ci terminée.");
-  else { toast("🐚 Toutes les étapes disponibles sont terminées ! Ultreia !"); goHome(); }
+  if(next && isEtapeJouable(next)){
+    startEtape(next);
+  } else if(next){
+    toast("⏳ L'étape suivante sera débloquée une fois celle-ci terminée.");
+  } else {
+    // France terminée (étape 20 complète) → proposer l'Espagne
+    if(etapeNum >= 20){
+      showEspagneInvitation();
+    } else {
+      toast("🐚 Toutes les étapes disponibles sont terminées ! Ultreia !");
+      goHome();
+    }
+  }
 }
 
 function showLoading(b){

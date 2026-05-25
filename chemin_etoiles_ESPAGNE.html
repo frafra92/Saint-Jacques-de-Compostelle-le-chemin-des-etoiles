@@ -317,7 +317,12 @@ button.nb.show{display:block}
         <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
         <span>⭐</span><span>⭐</span>
       </div>
-      <button class="frontier-btn" onclick="closeFrontier()">
+      <div id="frontier-warning" style="display:none;background:rgba(139,0,0,0.3);border:1px solid #cc4444;border-radius:12px;padding:14px 20px;margin-bottom:16px;font-size:15px;color:#ffaaaa;text-align:center;max-width:360px;">
+        ⚠️ <strong>Finissez d'abord la France !</strong><br>
+        <span style="font-size:13px;opacity:0.85">L'étape 20 (Saint-Jean-Pied-de-Port → Roncevaux) doit être terminée pour traverser les Pyrénées.</span><br>
+        <a href="chemin_etoiles_FRANCE.html" style="display:inline-block;margin-top:10px;color:#FFD700;font-family:'Cinzel',serif;font-size:13px;letter-spacing:1px;">← Retourner en France</a>
+      </div>
+      <button class="frontier-btn" onclick="checkFranceAndContinue()">
         ¡Ultreia! · Continuar →
       </button>
     </div>
@@ -833,6 +838,7 @@ const CATALOGUE = [
   {n:17, de:"Aire-sur-l'Adour",      a:"Orthez",                   km:42,  pays:"🇫🇷"},
   {n:18, de:"Orthez",                a:"Ostabat",                  km:45,  pays:"🇫🇷"},
   {n:19, de:"Ostabat",               a:"Saint-Jean-Pied-de-Port",  km:25,  pays:"🇫🇷"},
+  {n:20, de:"Saint-Jean-Pied-de-Port", a:"Roncevaux",                km:25,  pays:"🇫🇷"},
   {n:21, de:"Roncevaux",            a:"Zubiri",                      km:22,  pays:"🇪🇸"},
   {n:22, de:"Zubiri",               a:"Pamplona",                    km:23,  pays:"🇪🇸"},
   {n:23, de:"Pamplona",             a:"Puente la Reina",             km:24,  pays:"🇪🇸"},
@@ -1001,9 +1007,11 @@ function isEtapeTerminee(num){
 }
 
 function isEtapeJouable(num){
-  // Étape 1 et étape 21 (1ère étape Espagne) : toujours jouables si dans ETAPES_DISPO
-  if(num === 1 || num === 21 || num === 34) return ETAPES_DISPO.includes(num);
-  // Autres : jouable si disponible ET étape précédente terminée
+  // Étape 1 : toujours jouable
+  if(num === 1) return ETAPES_DISPO.includes(num);
+  // Étape 34 (1ère Fisterra) : jouable si étape 33 terminée
+  // Étape 21 (1ère Espagne) : jouable si étape 20 de France est terminée (même localStorage cdv9)
+  // Toutes les étapes : jouable si disponible ET étape précédente terminée
   return ETAPES_DISPO.includes(num) && isEtapeTerminee(num - 1);
 }
 
@@ -1660,6 +1668,35 @@ function toast(msg,dur=3200){const t=document.getElementById("toast");t.textCont
 /* ════════════════════════════════════════════════════
    INITIALISATION
 ════════════════════════════════════════════════════ */
+function closeFrontier(){
+  document.getElementById("frontier-screen").style.display="none";
+  document.getElementById("app").style.display="flex";
+}
+
+function checkFranceAndContinue(){
+  if(isFranceTerminee()){
+    closeFrontier();
+  } else {
+    // France non terminée — afficher message et proposer retour
+    const msgDiv = document.getElementById("frontier-warning");
+    if(msgDiv){
+      msgDiv.style.display = "block";
+      setTimeout(()=>{ msgDiv.style.display="none"; }, 5000);
+    }
+  }
+}
+
+function isFranceTerminee(){
+  // Vérifie que l'étape 20 de France est terminée dans la sauvegarde partagée
+  try{
+    const sv=JSON.parse(localStorage.getItem("cdv9")||"null");
+    if(!sv||!sv.progEtapes) return false;
+    const e20=sv.progEtapes[20];
+    // Étape 20 = Saint-Jean→Roncevaux = 25 km
+    return e20 && e20.km >= 25;
+  }catch(e){ return false; }
+}
+
 function init(){
   // Charger la sauvegarde pour la progression
   try{
