@@ -212,7 +212,7 @@ button.nb.show{display:block}
 .toast.show{opacity:1}
 
 /* Chargement */
-#loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:500;gap:14px}
+#loading{position:fixed;inset:0;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:500;gap:14px}
 .load-coquille{font-size:50px;animation:bob 1.5s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .load-txt{font-family:'Cinzel',serif;font-size:14px;color:var(--or);letter-spacing:2px}
@@ -288,7 +288,7 @@ button.nb.show{display:block}
 </div>
 
 
-<div id="app" style="display:none">
+<div id="app" style="display:flex">
 
 <!-- ══ INTRO ══ -->
 <div id="si" class="screen active">
@@ -1755,9 +1755,7 @@ function init(){
   // Son au premier clic
   document.addEventListener("click",function s(){initAC();document.removeEventListener("click",s);},{once:true});
 
-  // Masquer le loading, afficher l'app
-  document.getElementById("loading").style.display="none";
-  document.getElementById("app").style.display="flex";
+  // Loading masqué par défaut (CSS), app visible
 
   // Profil joueur — afficher si premier lancement
   showProfilIfNeeded();
@@ -1822,30 +1820,6 @@ async function submitLeaderboard(){
     });
   }catch(e){console.log("LB error",e);}
 }
-    }catch(e){}
-    const entry={
-      nom:profil.nom,ville:profil.ville,pays:profil.pays,
-      score:getTotalScore(),etapes:getEtapesTerminees(),km:getKmTotal(),
-      fichier:"FRANCE",ts:Date.now(),id:profil.since,
-    };
-    const idx=lb.findIndex(e=>e.id===entry.id);
-    if(idx>=0){lb[idx]=entry;}else{lb.push(entry);}
-    lb.sort((a,b)=>b.score-a.score);
-    if(lb.length>200)lb=lb.slice(0,200);
-    await fetch(URL,{method:"PUT",headers:{"Content-Type":"application/json","X-Access-Key":X_KEY},body:JSON.stringify({leaderboard:lb})});
-  }catch(e){console.log("LB error",e);}
-}
-
-/* ── Bouton sticky intro — apparaît dès 150px de scroll ── */
-(function(){
-  var si = document.getElementById('si');
-  var btn = document.getElementById('sticky-start');
-  if(si && btn){
-    si.addEventListener('scroll', function(){
-      btn.classList.toggle('visible', si.scrollTop > 150);
-    }, {passive:true});
-  }
-})();
 
 </script>
 </body>
