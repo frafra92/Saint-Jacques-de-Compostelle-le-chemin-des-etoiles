@@ -867,64 +867,71 @@ let met, curAleaEff=0;
 let AC=null, vol=.4, mG=null, audioEnabled=true;
 function initAC(){
   if(AC)return;
-  try{AC=new(window.AudioContext||window.webkitAudioContext)();mG=AC.createGain();mG.gain.value=vol;}
+  try{AC=new(window.AudioContext||window.webkitAudioContext)();mG=AC.createGain();mG.gain.value=vol;mG.connect(AC.destination);}
   catch(e){audioEnabled=false;}
 }
-function playWhistle(){
+function _play(fn){
   if(!AC||!audioEnabled)return;
-  [[500,.0],[650,.09],[800,.18],[1000,.27]].forEach(([f,dt])=>{
-    const o=AC.createOscillator(),g=AC.createGain();o.type="sine";o.frequency.value=f;
-    o.frequency.linearRampToValueAtTime(f*1.12,AC.currentTime+dt+.08);
-    o.connect(g);g.connect(mG);const t=AC.currentTime+dt;
-    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.13,t+.02);g.gain.linearRampToValueAtTime(0,t+.09);
-    o.start(t);o.stop(t+.12);
+  const p=AC.state==='suspended'?AC.resume():Promise.resolve();
+  p.then(fn).catch(()=>{});
+}
+function playWhistle(){
+  _play(()=>{
+    [[500,.0],[650,.09],[800,.18],[1000,.27]].forEach(([f,dt])=>{
+      const o=AC.createOscillator(),g=AC.createGain();o.type="sine";o.frequency.value=f;
+      o.frequency.linearRampToValueAtTime(f*1.12,AC.currentTime+dt+.08);
+      o.connect(g);g.connect(mG);const t=AC.currentTime+dt;
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.13,t+.02);g.gain.linearRampToValueAtTime(0,t+.09);
+      o.start(t);o.stop(t+.12);
+    });
+    const of=AC.createOscillator(),gf=AC.createGain();
+    of.type="sine";of.frequency.value=1200;of.frequency.exponentialRampToValueAtTime(900,AC.currentTime+.55);
+    of.connect(gf);gf.connect(mG);const tf=AC.currentTime+.36;
+    gf.gain.setValueAtTime(0,tf);gf.gain.linearRampToValueAtTime(.09,tf+.04);gf.gain.exponentialRampToValueAtTime(.001,tf+.45);
+    of.start(tf);of.stop(tf+.5);
   });
-  const of=AC.createOscillator(),gf=AC.createGain();
-  of.type="sine";of.frequency.value=1200;of.frequency.exponentialRampToValueAtTime(900,AC.currentTime+.55);
-  of.connect(gf);gf.connect(mG);const tf=AC.currentTime+.36;
-  gf.gain.setValueAtTime(0,tf);gf.gain.linearRampToValueAtTime(.09,tf+.04);gf.gain.exponentialRampToValueAtTime(.001,tf+.45);
-  of.start(tf);of.stop(tf+.5);
 }
 function playBell(){
-  if(!AC||!audioEnabled)return;
-  [523,659].forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type="sine";o.frequency.value=f;o.connect(g);g.connect(mG);const t=AC.currentTime+i*.08;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.16,t+.01);g.gain.exponentialRampToValueAtTime(.001,t+2.5);o.start(t);o.stop(t+2.6);});
-}
-function playBuzz(){
-  if(!AC||!audioEnabled)return;
-  const o=AC.createOscillator(),g=AC.createGain();
-  o.type="sawtooth";
-  o.frequency.setValueAtTime(220,AC.currentTime);
-  o.frequency.exponentialRampToValueAtTime(80,AC.currentTime+.35);
-  o.connect(g);g.connect(mG);
-  g.gain.setValueAtTime(0,AC.currentTime);
-  g.gain.linearRampToValueAtTime(.18,AC.currentTime+.02);
-  g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.4);
-  o.start(AC.currentTime);o.stop(AC.currentTime+.45);
-  const o2=AC.createOscillator(),g2=AC.createGain();
-  o2.type="sine";
-  o2.frequency.setValueAtTime(110,AC.currentTime+.05);
-  o2.frequency.exponentialRampToValueAtTime(60,AC.currentTime+.3);
-  o2.connect(g2);g2.connect(mG);
-  g2.gain.setValueAtTime(0,AC.currentTime+.05);
-  g2.gain.linearRampToValueAtTime(.12,AC.currentTime+.08);
-  g2.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.35);
-  o2.start(AC.currentTime+.05);o2.stop(AC.currentTime+.4);
-}
-
-function playVictoire(){
-  if(!AC||!audioEnabled)return;
-  [[523,.0],[659,.12],[784,.24],[1047,.38]].forEach(([f,dt])=>{
-    const o=AC.createOscillator(),g=AC.createGain();
-    o.type="triangle";o.frequency.value=f;
-    o.connect(g);g.connect(mG);
-    const t=AC.currentTime+dt;
-    g.gain.setValueAtTime(0,t);
-    g.gain.linearRampToValueAtTime(.15,t+.03);
-    g.gain.exponentialRampToValueAtTime(.001,t+.25);
-    o.start(t);o.stop(t+.3);
+  _play(()=>{
+    [523,659].forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type="sine";o.frequency.value=f;o.connect(g);g.connect(mG);const t=AC.currentTime+i*.08;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.16,t+.01);g.gain.exponentialRampToValueAtTime(.001,t+2.5);o.start(t);o.stop(t+2.6);});
   });
 }
-
+function playBuzz(){
+  _play(()=>{
+    const o=AC.createOscillator(),g=AC.createGain();
+    o.type="sawtooth";
+    o.frequency.setValueAtTime(220,AC.currentTime);
+    o.frequency.exponentialRampToValueAtTime(80,AC.currentTime+.35);
+    o.connect(g);g.connect(mG);
+    g.gain.setValueAtTime(0,AC.currentTime);
+    g.gain.linearRampToValueAtTime(.18,AC.currentTime+.02);
+    g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.4);
+    o.start(AC.currentTime);o.stop(AC.currentTime+.45);
+    const o2=AC.createOscillator(),g2=AC.createGain();
+    o2.type="sine";
+    o2.frequency.setValueAtTime(110,AC.currentTime+.05);
+    o2.frequency.exponentialRampToValueAtTime(60,AC.currentTime+.3);
+    o2.connect(g2);g2.connect(mG);
+    g2.gain.setValueAtTime(0,AC.currentTime+.05);
+    g2.gain.linearRampToValueAtTime(.12,AC.currentTime+.08);
+    g2.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.35);
+    o2.start(AC.currentTime+.05);o2.stop(AC.currentTime+.4);
+  });
+}
+function playVictoire(){
+  _play(()=>{
+    [[523,.0],[659,.12],[784,.24],[1047,.38]].forEach(([f,dt])=>{
+      const o=AC.createOscillator(),g=AC.createGain();
+      o.type="triangle";o.frequency.value=f;
+      o.connect(g);g.connect(mG);
+      const t=AC.currentTime+dt;
+      g.gain.setValueAtTime(0,t);
+      g.gain.linearRampToValueAtTime(.15,t+.03);
+      g.gain.exponentialRampToValueAtTime(.001,t+.25);
+      o.start(t);o.stop(t+.3);
+    });
+  });
+}
 function toggleAudio(){
   initAC();audioEnabled=!audioEnabled;
   const b=document.getElementById("adbtn");
