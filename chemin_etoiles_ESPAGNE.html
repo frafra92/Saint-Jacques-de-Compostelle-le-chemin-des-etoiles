@@ -209,7 +209,7 @@ button.nb.show{display:block}
 .toast.show{opacity:1}
 
 /* Chargement */
-#loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:500;gap:14px}
+#loading{position:fixed;inset:0;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:500;gap:14px}
 .load-coquille{font-size:50px;animation:bob 1.5s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .load-txt{font-family:'Cinzel',serif;font-size:14px;color:var(--or);letter-spacing:2px}
@@ -346,7 +346,7 @@ button.nb.show{display:block}
   </div>
 </div>
 
-<div id="app" style="display:none">
+<div id="app" style="display:flex">
 
 <!-- ══ INTRO ══ -->
 <div id="si" class="screen active">
@@ -889,6 +889,42 @@ function playBell(){
   if(!AC||!audioEnabled)return;
   [523,659].forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type="sine";o.frequency.value=f;o.connect(g);g.connect(mG);const t=AC.currentTime+i*.08;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.16,t+.01);g.gain.exponentialRampToValueAtTime(.001,t+2.5);o.start(t);o.stop(t+2.6);});
 }
+function playBuzz(){
+  if(!AC||!audioEnabled)return;
+  const o=AC.createOscillator(),g=AC.createGain();
+  o.type="sawtooth";
+  o.frequency.setValueAtTime(220,AC.currentTime);
+  o.frequency.exponentialRampToValueAtTime(80,AC.currentTime+.35);
+  o.connect(g);g.connect(mG);
+  g.gain.setValueAtTime(0,AC.currentTime);
+  g.gain.linearRampToValueAtTime(.18,AC.currentTime+.02);
+  g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.4);
+  o.start(AC.currentTime);o.stop(AC.currentTime+.45);
+  const o2=AC.createOscillator(),g2=AC.createGain();
+  o2.type="sine";
+  o2.frequency.setValueAtTime(110,AC.currentTime+.05);
+  o2.frequency.exponentialRampToValueAtTime(60,AC.currentTime+.3);
+  o2.connect(g2);g2.connect(mG);
+  g2.gain.setValueAtTime(0,AC.currentTime+.05);
+  g2.gain.linearRampToValueAtTime(.12,AC.currentTime+.08);
+  g2.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.35);
+  o2.start(AC.currentTime+.05);o2.stop(AC.currentTime+.4);
+}
+
+function playVictoire(){
+  if(!AC||!audioEnabled)return;
+  [[523,.0],[659,.12],[784,.24],[1047,.38]].forEach(([f,dt])=>{
+    const o=AC.createOscillator(),g=AC.createGain();
+    o.type="triangle";o.frequency.value=f;
+    o.connect(g);g.connect(mG);
+    const t=AC.currentTime+dt;
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(.15,t+.03);
+    g.gain.exponentialRampToValueAtTime(.001,t+.25);
+    o.start(t);o.stop(t+.3);
+  });
+}
+
 function toggleAudio(){
   initAC();audioEnabled=!audioEnabled;
   const b=document.getElementById("adbtn");
@@ -1583,13 +1619,13 @@ function resolve(ok,km_q,q){
   answered=true;let delta=0,tit="",extra="";
   const T=ETAPE.distance_km;
   if(ok){
-    delta=1;score+=pts(km_q);tit="✓  Bonne réponse !";playWhistle();
+    delta=1;score+=pts(km_q);tit="✓  Bonne réponse !";playVictoire();
     if(met&&typeof met.bonus==="number"&&met.bonus>0&&!meteoShield){delta+=met.bonus;extra=" — "+met.ico+" +"+met.bonus+" km !";}
   }else{
     const p=pen(km_q);
     if(skipPen){delta=0;skipPen=false;tit="✗  Faux — la branche te protège !";}
     else if(immunity>0&&p>0){immunity--;delta=1;tit="✗  Faux — immunité : +1 km quand même !";updStats();}
-    else{delta=-p;tit=p>0?"✗  Faux — "+Math.abs(delta)+" km de recul":"✗  Faux — sur place.";}
+    else{playBuzz();delta=-p;tit=p>0?"✗  Faux — "+Math.abs(delta)+" km de recul":"✗  Faux — sur place.";}
     if(met&&!meteoShield){if(met.bonus==="wait"&&delta<0){delta--;extra=" — "+met.ico+" recul !";}else if(typeof met.bonus==="number"&&met.bonus<0&&delta<0){delta+=met.bonus;extra=" — "+met.ico+" recul !";}}
   }
   km=Math.max(0,Math.min(T,km+delta));updStats();renderMap();
@@ -1706,8 +1742,7 @@ function init(){
   document.addEventListener("click",function s(){initAC();document.removeEventListener("click",s);},{once:true});
 
   // Masquer le loading, afficher l'app
-  document.getElementById("loading").style.display="none";
-  document.getElementById("app").style.display="flex";
+  // app visible, loading caché (CSS)
 
   // Profil joueur — afficher si premier lancement
   showProfilIfNeeded();
@@ -1770,19 +1805,6 @@ async function submitLeaderboard(){
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify(entry)
     });
-  }catch(e){console.log("LB error",e);}
-}
-    }catch(e){}
-    const entry={
-      nom:profil.nom,ville:profil.ville,pays:profil.pays,
-      score:getTotalScore(),etapes:getEtapesTerminees(),km:getKmTotal(),
-      fichier:"ESPAGNE",ts:Date.now(),id:profil.since,
-    };
-    const idx=lb.findIndex(e=>e.id===entry.id);
-    if(idx>=0){lb[idx]=entry;}else{lb.push(entry);}
-    lb.sort((a,b)=>b.score-a.score);
-    if(lb.length>200)lb=lb.slice(0,200);
-    await fetch(URL,{method:"PUT",headers:{"Content-Type":"application/json","X-Access-Key":X_KEY},body:JSON.stringify({leaderboard:lb})});
   }catch(e){console.log("LB error",e);}
 }
 
