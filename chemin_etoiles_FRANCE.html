@@ -1844,7 +1844,7 @@ function getKmTotal(){return Object.values(progEtapes).reduce((s,e)=>s+(e.km||0)
 async function submitLeaderboard(){
   const profil=getProfilLocal();
   if(!profil||profil.skip)return;
-  const APPS_URL="https://script.google.com/macros/s/AKfycbxHAYVe2jdmzUvtLO7g0jMoiXC8sHdm-x80ofqCdoAqnvABemznoW_7EKoI3zNiMDVk/exec";
+  const APPS_URL="https://script.google.com/macros/s/AKfycbz77VPX_pFJKIDtiYC3H8twXZLS18zWDQ3FAJEO2qTGCz8U5ESowARwvPiQL_QzqUrZ/exec";
   if(!APPS_URL)return;
   try{
     const entry={
