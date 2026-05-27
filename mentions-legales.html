@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mentions légales – Le Chemin des Étoiles</title>
+  <meta name="description" content="Mentions légales du jeu-questionnaire Le Chemin des Étoiles – Saint-Jacques-de-Compostelle." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold:        #c9a84c;
+      --gold-light:  #e2c37a;
+      --gold-dim:    rgba(201,168,76,0.18);
+      --bg:          #0d0c0a;
+      --bg-card:     #141210;
+      --bg-card2:    #1a1713;
+      --text:        #e8e0d0;
+      --text-muted:  #9a8f7a;
+      --border:      rgba(201,168,76,0.22);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative;
+      text-align: center;
+      padding: 4rem 1.5rem 3rem;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 70%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          rgba(201,168,76,0.04) 39px,
+          rgba(201,168,76,0.04) 40px
+        );
+      pointer-events: none;
+    }
+    .header-icon {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      animation: floatY 4s ease-in-out infinite;
+      display: block;
+    }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+    header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    header p.subtitle {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .gold-divider {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.6rem auto 0;
+    }
+
+    /* ── BACK LINK ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      transition: color 0.2s, border-color 0.2s;
+      margin: 0 auto 2.5rem;
+      display: flex;
+      width: fit-content;
+    }
+    .back-link:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* ── LAYOUT ── */
+    main {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+
+    /* ── TOC ── */
+    nav.toc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.8rem 2rem;
+      margin-bottom: 3rem;
+    }
+    nav.toc h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    nav.toc ol {
+      list-style: none;
+      counter-reset: toc;
+      display: grid;
+      gap: 0.5rem;
+    }
+    nav.toc li { counter-increment: toc; }
+    nav.toc a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      transition: color 0.2s;
+    }
+    nav.toc a::before {
+      content: counter(toc, decimal-leading-zero);
+      color: var(--gold-dim);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      min-width: 22px;
+    }
+    nav.toc a:hover { color: var(--gold); }
+
+    /* ── SECTIONS ── */
+    section {
+      margin-bottom: 2.8rem;
+      scroll-margin-top: 2rem;
+    }
+    section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    section h2 .num {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      font-family: 'Jost', sans-serif;
+    }
+    section p {
+      margin-bottom: 0.9rem;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+    section p:last-child { margin-bottom: 0; }
+    section strong {
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+    section a {
+      color: var(--gold);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    section a:hover { color: var(--gold-light); }
+
+    /* ── INFO BOX ── */
+    .info-box {
+      background: var(--bg-card2);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 4px 4px 0;
+      padding: 1.2rem 1.5rem;
+      margin: 1.2rem 0;
+      font-size: 0.88rem;
+    }
+    .info-box p { margin-bottom: 0.5rem; }
+    .info-box p:last-child { margin-bottom: 0; }
+
+    /* ── TABLE ── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      margin: 1rem 0;
+    }
+    .data-table th {
+      text-align: left;
+      color: var(--gold);
+      font-weight: 500;
+      font-family: 'Jost', sans-serif;
+      letter-spacing: 0.08em;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+    }
+    .data-table td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+    .data-table td:first-child { color: var(--text); }
+    .data-table tr:last-child td { border-bottom: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav.toc { padding: 1.2rem; }
+      .data-table th, .data-table td { padding: 0.5rem 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="header-icon">⚜</span>
+    <h1>Mentions légales</h1>
+    <p class="subtitle">Le Chemin des Étoiles · Saint-Jacques-de-Compostelle</p>
+    <div class="gold-divider"></div>
+  </header>
+
+  <main>
+
+    <a href="index.html" class="back-link">← Retour au jeu</a>
+
+    <!-- TABLE DES MATIÈRES -->
+    <nav class="toc" aria-label="Table des matières">
+      <h2>Sommaire</h2>
+      <ol>
+        <li><a href="#editeur">Éditeur du site</a></li>
+        <li><a href="#hebergement">Hébergement</a></li>
+        <li><a href="#donnees">Données personnelles & RGPD</a></li>
+        <li><a href="#leaderboard">Leaderboard et pseudonymes</a></li>
+        <li><a href="#cookies">Cookies et stockage local</a></li>
+        <li><a href="#propriete">Propriété intellectuelle</a></li>
+        <li><a href="#responsabilite">Limitation de responsabilité</a></li>
+        <li><a href="#contact">Contact & droits</a></li>
+      </ol>
+    </nav>
+
+    <!-- 1. ÉDITEUR -->
+    <section id="editeur">
+      <h2><span class="num">01 —</span> Éditeur du site</h2>
+      <div class="info-box">
+        <p><strong>Nom du site :</strong> Le Chemin des Étoiles – Saint-Jacques-de-Compostelle</p>
+        <p><strong>URL :</strong> <a href="https://frafra92.github.io/Saint-Jacques-de-Compostelle-le-chemin-des-etoiles/" target="_blank" rel="noopener">frafra92.github.io/Saint-Jacques-de-Compostelle-le-chemin-des-etoiles</a></p>
+        <p><strong>Responsable de la publication :</strong> François Gaillard</p>
+        <p><strong>Contact :</strong> <a href="mailto:votre@email.fr">francoisgaillard92@outlook.fr</a></p>
+        <p><strong>Statut :</strong> Particulier – site non commercial</p>
+      </div>
+      <p>Ce site est un jeu-questionnaire culturel et pédagogique consacré au chemin de Saint-Jacques-de-Compostelle. Il ne poursuit aucun but lucratif.</p>
+    </section>
+
+    <!-- 2. HÉBERGEMENT -->
+    <section id="hebergement">
+      <h2><span class="num">02 —</span> Hébergement</h2>
+      <div class="info-box">
+        <p><strong>Hébergeur :</strong> GitHub, Inc.</p>
+        <p><strong>Service :</strong> GitHub Pages (hébergement statique gratuit)</p>
+        <p><strong>Adresse :</strong> 88 Colin P Kelly Jr Street, San Francisco, CA 94107, États-Unis</p>
+        <p><strong>Site :</strong> <a href="https://github.com" target="_blank" rel="noopener">github.com</a></p>
+      </div>
+      <p>GitHub Pages est soumis à la politique de confidentialité de GitHub disponible à l'adresse <a href="https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">docs.github.com</a>. GitHub peut collecter des données de navigation (adresses IP, logs serveur) conformément à sa propre politique.</p>
+    </section>
+
+    <!-- 3. DONNÉES PERSONNELLES -->
+    <section id="donnees">
+      <h2><span class="num">03 —</span> Données personnelles & RGPD</h2>
+      <p>Conformément au <strong>Règlement (UE) 2016/679</strong> (RGPD) et à la loi Informatique et Libertés modifiée, vous disposez de droits sur vos données personnelles.</p>
+      <p>Les seules données collectées lors de l'inscription au jeu sont :</p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Donnée</th>
+            <th>Finalité</th>
+            <th>Durée de conservation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pseudonyme choisi</td>
+            <td>Affichage dans le classement (leaderboard)</td>
+            <td>Jusqu'à suppression manuelle ou remise à zéro du leaderboard</td>
+          </tr>
+          <tr>
+            <td>Score et progression</td>
+            <td>Calcul du classement, motivation du joueur</td>
+            <td>Même durée que le pseudonyme associé</td>
+          </tr>
+          <tr>
+            <td>Date et heure de l'inscription</td>
+            <td>Tri chronologique en cas d'égalité de score</td>
+            <td>Même durée</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Ces données sont stockées dans le service <strong>Firebase Realtime Database</strong> (Google LLC) ou équivalent, dont le siège est situé aux États-Unis. Un transfert hors UE peut donc avoir lieu, encadré par les clauses contractuelles types de la Commission européenne.</p>
+      <p><strong>Aucune donnée n'est vendue ni partagée</strong> avec des tiers à des fins commerciales.</p>
+    </section>
+
+    <!-- 4. LEADERBOARD -->
+    <section id="leaderboard">
+      <h2><span class="num">04 —</span> Leaderboard et pseudonymes</h2>
+      <p>Le leaderboard affiche publiquement les <strong>pseudonymes</strong> et les scores des joueurs inscrits. En choisissant un pseudonyme lors de l'inscription, vous acceptez expressément que celui-ci soit visible de tous les visiteurs du site.</p>
+      <p>Il est fortement déconseillé d'utiliser comme pseudonyme :</p>
+      <div class="info-box">
+        <p>• Votre nom et prénom réels</p>
+        <p>• Votre adresse e-mail ou numéro de téléphone</p>
+        <p>• Toute information permettant de vous identifier directement</p>
+      </div>
+      <p>L'éditeur se réserve le droit de supprimer tout pseudonyme contraire aux bonnes mœurs, à l'ordre public ou portant atteinte à des droits de tiers.</p>
+      <p>Pour demander la suppression de votre pseudonyme et de votre score du leaderboard, contactez-nous à l'adresse indiquée à la section <a href="#contact">Contact</a>.</p>
+    </section>
+
+    <!-- 5. COOKIES -->
+    <section id="cookies">
+      <h2><span class="num">05 —</span> Cookies et stockage local</h2>
+      <p>Ce site utilise le <strong>stockage local du navigateur</strong> (<code>localStorage</code>) pour conserver votre progression, votre score et votre pseudonyme entre deux sessions de jeu. Ces données restent sur votre appareil et ne sont pas transmises à des tiers, à l'exception de la synchronisation avec le leaderboard décrite ci-dessus.</p>
+      <p>Ce site n'utilise <strong>pas de cookies publicitaires ni de traceurs marketing</strong>.</p>
+      <p>Des cookies techniques peuvent être déposés par GitHub Pages (hébergeur) pour assurer le fonctionnement du service. Ces cookies ne sont pas sous le contrôle de l'éditeur.</p>
+      <p>Vous pouvez effacer les données stockées localement à tout moment via les paramètres de votre navigateur (<em>Outils → Historique → Effacer les données de navigation → Données de sites</em>).</p>
+    </section>
+
+    <!-- 6. PROPRIÉTÉ INTELLECTUELLE -->
+    <section id="propriete">
+      <h2><span class="num">06 —</span> Propriété intellectuelle</h2>
+      <p>L'ensemble du contenu de ce site (questions, textes, structure, design, code) est la propriété exclusive de l'éditeur, sauf mention contraire.</p>
+      <p>Les <strong>photographies et illustrations</strong> utilisées sont soit la propriété de l'éditeur, soit issues de banques d'images libres de droits (Unsplash, Wikimedia Commons, etc.) avec attribution le cas échéant.</p>
+      <p>Toute reproduction, représentation ou diffusion, même partielle, du contenu de ce site sans autorisation écrite préalable de l'éditeur est interdite et constituerait une contrefaçon sanctionnée par les articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
+    </section>
+
+    <!-- 7. RESPONSABILITÉ -->
+    <section id="responsabilite">
+      <h2><span class="num">07 —</span> Limitation de responsabilité</h2>
+      <p>Les informations culturelles et géographiques présentes dans ce jeu sont fournies à titre éducatif et de divertissement. L'éditeur s'efforce d'en assurer l'exactitude mais ne saurait être tenu responsable d'éventuelles erreurs ou omissions.</p>
+      <p>L'éditeur ne peut être tenu responsable des dommages directs ou indirects résultant de l'utilisation de ce site ou de l'impossibilité d'y accéder.</p>
+      <p>Des liens hypertextes peuvent pointer vers des sites tiers. L'éditeur n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu.</p>
+    </section>
+
+    <!-- 8. CONTACT -->
+    <section id="contact">
+      <h2><span class="num">08 —</span> Contact & droits</h2>
+      <p>Pour exercer vos droits d'accès, de rectification, d'effacement, de portabilité ou d'opposition sur vos données personnelles, ou pour toute question relative aux présentes mentions légales, contactez l'éditeur :</p>
+      <div class="info-box">
+        <p><strong>Par e-mail :</strong> <a href="mailto:votre@email.fr">votre@email.fr</a></p>
+        <p><strong>Délai de réponse :</strong> Dans un délai maximum d'un mois conformément à l'article 12 du RGPD.</p>
+      </div>
+      <p>En cas de réclamation non résolue, vous pouvez saisir la <strong>Commission Nationale de l'Informatique et des Libertés (CNIL)</strong> :</p>
+      <div class="info-box">
+        <p><strong>CNIL</strong> – 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07</p>
+        <p><strong>Site :</strong> <a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a></p>
+      </div>
+      <p style="margin-top:1.5rem; font-size:0.82rem; color:var(--text-muted);">
+        Dernière mise à jour : <strong style="color:var(--text-muted);">Mai 2025</strong>
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Le Chemin des Étoiles &nbsp;·&nbsp; <a href="index.html">Retour au jeu</a></p>
+  </footer>
+
+</body>
+</html>
