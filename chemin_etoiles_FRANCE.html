@@ -519,7 +519,7 @@ button.nb.show{display:block}
     <!-- Grille -->
     <div class="etapes-grid" id="etapes-grid"></div>
     <div style="text-align:center;font-size:11px;color:#3a2808;margin-top:14px">
-      Fonctionne hors ligne · Sauvegarde automatique · Compatible mobile et ordinateur · <a href="mentions-legales.html" style="color:var(--b4);text-decoration:none;font-size:11px;letter-spacing:1px;font-family:'Jost',sans-serif">MENTIONS LÉGALES</a>
+      Fonctionne hors ligne · Sauvegarde automatique · Compatible mobile et ordinateur
     </div>
   </div>
 
@@ -687,6 +687,7 @@ button.nb.show{display:block}
   <div style="padding:9px 13px;border-top:1px solid var(--b3);text-align:center;font-size:10px;color:var(--ord);font-family:'Cinzel',serif;flex-shrink:0">
     ✦ Oficina de Acogida al Peregrino · Santiago de Compostela ✦
     <br><button class="btn btn-dim" onclick="closeAllPopups()" style="margin-top:6px;font-size:12px;padding:5px 14px">Fermer</button>
+    <button class="btn btn-gold" onclick="downloadCredencial()" style="margin-top:6px;margin-left:8px;font-size:12px;padding:5px 14px">📥 Télécharger</button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -1478,6 +1479,127 @@ function openCredencial(){
   document.getElementById("cpop").style.display="flex";
   document.getElementById("ovl").style.display="block";
 }
+
+function downloadCredencial(){
+  const cpop = document.getElementById("cpop");
+  const body = document.getElementById("cred-body");
+  const pseudo = (PROFIL && PROFIL.pseudo) ? PROFIL.pseudo : "Pèlerin";
+  const km_total = KM || 0;
+  const etapes_terminees = Object.keys(progEtapes).filter(k=>progEtapes[k]&&progEtapes[k].fini).length;
+  const badges_gagnes = [...earned];
+
+  // Construire un canvas
+  const W = 480, H = 680;
+  const canvas = document.createElement("canvas");
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext("2d");
+
+  // Fond
+  const bg = ctx.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0,"#0a0800"); bg.addColorStop(1,"#030600");
+  ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+  // Bordure dorée
+  ctx.strokeStyle = "#c9a84c"; ctx.lineWidth = 2;
+  ctx.strokeRect(12,12,W-24,H-24);
+  ctx.strokeStyle = "rgba(201,168,76,.35)"; ctx.lineWidth = 1;
+  ctx.strokeRect(18,18,W-36,H-36);
+
+  // Emoji coquille
+  ctx.font = "36px serif"; ctx.textAlign = "center";
+  ctx.fillText("🐚", W/2, 62);
+
+  // Titre
+  ctx.fillStyle = "#c9a84c";
+  ctx.font = "bold 15px Georgia,serif";
+  ctx.letterSpacing = "3px";
+  ctx.fillText("CREDENCIAL DEL PEREGRINO", W/2, 95);
+
+  ctx.fillStyle = "rgba(201,168,76,.55)";
+  ctx.font = "10px Georgia,serif";
+  ctx.fillText("Via Turonensis · GR655 · Paris → Santiago", W/2, 112);
+
+  // Séparateur
+  ctx.strokeStyle = "rgba(201,168,76,.4)"; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(40,122); ctx.lineTo(W-40,122); ctx.stroke();
+
+  // Pseudo & stats
+  ctx.fillStyle = "#e8d5a0";
+  ctx.font = "bold 18px Georgia,serif";
+  ctx.fillText(pseudo, W/2, 148);
+
+  ctx.fillStyle = "rgba(201,168,76,.7)";
+  ctx.font = "11px Georgia,serif";
+  ctx.fillText(km_total + " km parcourus · " + etapes_terminees + " étape(s) accomplie(s)", W/2, 166);
+
+  // Séparateur
+  ctx.strokeStyle = "rgba(201,168,76,.25)"; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(40,178); ctx.lineTo(W-40,178); ctx.stroke();
+
+  // Section sellos
+  ctx.fillStyle = "rgba(201,168,76,.6)";
+  ctx.font = "10px Georgia,serif";
+  ctx.letterSpacing = "2px";
+  ctx.fillText("SELLOS COLLECTÉS", W/2, 196);
+
+  // Grille de sellos via SVG → image
+  const all = getAllBadges().filter(b=>b&&b.id);
+  const earned_arr = all.filter(b=>earned.has(b.id));
+  const locked_arr = all.filter(b=>!earned.has(b.id));
+
+  const CELL = 52, GAP = 8, COLS = 7;
+  const grid_x = (W - (COLS*(CELL+GAP)-GAP)) / 2;
+  let gx = grid_x, gy = 208;
+
+  // Dessiner tous les sellos (gagnés = colorés, verrouillés = grisés)
+  const draw_items = [...earned_arr, ...locked_arr].slice(0,35);
+  draw_items.forEach((b,i)=>{
+    const col = i % COLS, row = Math.floor(i/COLS);
+    const x = grid_x + col*(CELL+GAP);
+    const y = 208 + row*(CELL+GAP);
+    const is_earned = earned.has(b.id);
+    // Fond cellule
+    ctx.fillStyle = is_earned ? "rgba(20,15,2,.9)" : "rgba(10,10,10,.5)";
+    ctx.beginPath();
+    ctx.roundRect(x,y,CELL,CELL,6);
+    ctx.fill();
+    // Bordure
+    ctx.strokeStyle = is_earned ? "#c9a84c" : "rgba(100,100,100,.3)";
+    ctx.lineWidth = is_earned ? 1.5 : 0.5;
+    ctx.beginPath();
+    ctx.roundRect(x,y,CELL,CELL,6);
+    ctx.stroke();
+    // Emoji ou ?
+    ctx.font = is_earned ? "22px serif" : "18px serif";
+    ctx.textAlign = "center";
+    ctx.globalAlpha = is_earned ? 1 : 0.2;
+    ctx.fillStyle = "white";
+    ctx.fillText(is_earned ? (b.ico||"🐚") : "?", x+CELL/2, y+CELL/2+8);
+    ctx.globalAlpha = 1;
+  });
+
+  // Séparateur bas
+  const grid_rows = Math.ceil(draw_items.length/COLS);
+  const sep_y = 208 + grid_rows*(CELL+GAP) + 8;
+  ctx.strokeStyle = "rgba(201,168,76,.25)"; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(40,sep_y); ctx.lineTo(W-40,sep_y); ctx.stroke();
+
+  // Pied de page
+  const date_str = new Date().toLocaleDateString("fr-FR",{year:"numeric",month:"long",day:"numeric"});
+  ctx.fillStyle = "rgba(201,168,76,.5)";
+  ctx.font = "9px Georgia,serif";
+  ctx.textAlign = "center";
+  ctx.fillText("✦ Oficina de Acogida al Peregrino · Santiago de Compostela ✦", W/2, sep_y+18);
+  ctx.fillText("Le Chemin des Étoiles · " + date_str, W/2, sep_y+32);
+
+  // Téléchargement
+  const link = document.createElement("a");
+  link.download = "credencial-" + pseudo.toLowerCase().replace(/\s+/g,"-") + ".png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+  toast("📥 Credencial téléchargée !");
+}
+
 function closeAllPopups(){
   document.getElementById("spop").style.display="none";
   document.getElementById("cpop").style.display="none";
