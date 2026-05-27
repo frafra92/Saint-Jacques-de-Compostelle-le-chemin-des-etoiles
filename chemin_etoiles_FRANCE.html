@@ -1452,9 +1452,9 @@ function openCredencial(){
   const all=getAllBadges();
   // Grouper
   const groupes=[
-    {label:"Lieux de l'étape",ids:all.filter(b=>b.id.startsWith("e")&&!b.id.startsWith("r")).map(b=>b.id)},
-    {label:"Rencontres",ids:all.filter(b=>b.id.startsWith("r")).map(b=>b.id)},
-    {label:"Objets du pèlerin",ids:all.filter(b=>b.id.startsWith("fi")).map(b=>b.id)},
+    {label:"Lieux de l'étape",ids:all.filter(b=>b.id&&b.id.startsWith("e")&&!b.id.startsWith("r")).map(b=>b.id)},
+    {label:"Rencontres",ids:all.filter(b=>b.id&&b.id.startsWith("r")).map(b=>b.id)},
+    {label:"Objets du pèlerin",ids:all.filter(b=>b.id&&b.id.startsWith("fi")).map(b=>b.id)},
     {label:"Exploits",ids:["km30","km60","etape_fin"]},
   ];
   groupes.forEach(g=>{
