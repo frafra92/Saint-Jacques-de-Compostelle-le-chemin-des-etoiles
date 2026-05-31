@@ -705,6 +705,16 @@ const TTS = (function(){
   let ttsEnabled = true;
   let currentUtterance = null;
 
+  // iOS/Safari : charger les voix dès que disponibles
+  if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices(); // déclenche le chargement
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices(); // force le cache
+      };
+    }
+  }
+
   /* ── Mémorisation des voix par personnage ── */
   const voixMemorisees = {}; // { "Un Chevalier Templier (†1307)": voiceObject, ... }
 
@@ -729,14 +739,18 @@ const TTS = (function(){
     const voix = window.speechSynthesis.getVoices();
     if (!voix.length) return null;
 
-    // Voix françaises uniquement
-    const fr = voix.filter(v => v.lang && v.lang.startsWith('fr'));
+    // Voix françaises uniquement (iOS: fr-FR, fr_FR, Android: fr-FR)
+    const fr = voix.filter(v => v.lang && (v.lang.startsWith('fr') || v.lang.startsWith('fr_')));
     if (!fr.length) return voix[0]; // fallback
 
+    // Priorité aux voix de haute qualité iOS (enhanced/premium)
+    const hq = fr.filter(v => /enhanced|premium|natural|compact/i.test(v.name));
+    const pool = hq.length ? hq : fr;
+
     // Filtrer par genre si possible
-    // Heuristique sur le nom : noms contenant des prénoms féminins/masculins connus
-    const feminins = ['female','femme','amelie','alice','julie','marie','aurelie','thomas-fr','virginie'];
-    const masculins = ['male','homme','thomas','pierre','nicolas','remi','arnaud','henri','paul','martin','jacques','microsoft david','google français'];
+    // iOS: Amélie (F), Thomas (M) — Android: fr-FR-default — Windows: Hortense
+    const feminins = ['female','femme','amelie','amélie','alice','julie','marie','aurelie','virginie','hortense','google français'];
+    const masculins = ['male','homme','thomas','pierre','nicolas','remi','arnaud','henri','paul','martin','jacques','microsoft paul','google français homme'];
 
     let candidates = fr;
     if (profil.gender === 'female') {
@@ -811,7 +825,18 @@ const TTS = (function(){
     };
 
     currentUtterance = u;
-    window.speechSynthesis.speak(u);
+    window.speechSynthesis.cancel(); // reset avant speak (fix iOS)
+    setTimeout(() => {
+      window.speechSynthesis.speak(u);
+      // iOS keepalive : resume toutes les 10s pour éviter la coupure
+      const _iosKA = setInterval(() => {
+        if (!window.speechSynthesis.speaking) { clearInterval(_iosKA); return; }
+        window.speechSynthesis.pause();
+        window.speechSynthesis.resume();
+      }, 10000);
+      u.onend = () => clearInterval(_iosKA);
+      u.onerror = () => clearInterval(_iosKA);
+    }, 50);
   }
 
   /* ── Arrêter la lecture ── */
