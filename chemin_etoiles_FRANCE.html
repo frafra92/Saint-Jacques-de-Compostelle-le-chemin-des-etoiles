@@ -1800,6 +1800,11 @@ function zoneOf(k){if(k<=10)return{cls:"zf",ico:"🟢",lbl:"Zone facile — km 1
 function pen(k){if(k<=10)return 2;if(k<=60)return 1;return 0;}
 function pts(k){if(k<=10)return 1;if(k<=30)return 2;if(k<=60)return 3;return 4;}
 function renderQ(){
+  // Scroll vers le haut de la zone de jeu sur mobile
+  setTimeout(()=>{
+    const qz = document.getElementById("qtxt") || document.getElementById("screen-jeu");
+    if(qz) qz.scrollIntoView({behavior:"smooth", block:"start"});
+  }, 80);
   const qs=ETAPE?.questions||[];
   if(qIdx>=qs.length){showFin();return;}
   const q=qs[qIdx];answered=false;elimCh=[];
@@ -1854,6 +1859,11 @@ function resolve(ok,km_q,q){
   rollAleaDisplay();
   document.getElementById("nb").className="nb show";
   renderSac();checkFoundItems(km);
+  // Scroll automatique vers le bouton Continuer (important sur mobile)
+  setTimeout(()=>{
+    const nb = document.getElementById("nb");
+    if(nb) nb.scrollIntoView({behavior:"smooth", block:"end"});
+  }, 150);
 }
 function renderJP(){
   const jp=document.getElementById("jp"),jpc=document.getElementById("jpchips");
