@@ -125,7 +125,7 @@ button.chip.found{border-color:#5a4820;background:#1e1400;color:#d4b860}
 .zm{background:#1c1500;border-bottom:1px solid #4a3c00;color:#c8a030}
 .zh{background:#1c0606;border-bottom:1px solid #4a1414;color:#c87878}
 .zx{background:#100820;border-bottom:1px solid #30184e;color:#a870d8}
-.scene-card{flex-shrink:0;padding:8px 13px 7px;border-bottom:1px solid var(--b3);background:var(--b1);position:relative}
+.scene-card{flex-shrink:0;padding:8px 13px 7px;border-bottom:1px solid var(--b3);background:var(--b1);position:relative;cursor:pointer;transition:padding .2s}.scene-card.collapsed{padding:5px 13px;}.scene-card.collapsed .scene-txt{display:none}.scene-card.collapsed .rencontre-badge{display:none!important}.scene-card.collapsed .scene-icon{font-size:16px;margin-right:6px}.scene-card.collapsed .scene-lieu{display:inline;font-size:11px}.scene-collapse-hint{font-size:10px;color:var(--ord);opacity:.55;float:right;margin-top:2px;user-select:none;pointer-events:none}.scene-card.collapsed .scene-collapse-hint{display:none}
 .tts-btn{position:absolute;top:6px;right:8px;background:none;border:1px solid var(--b3);border-radius:20px;padding:3px 9px;font-size:16px;color:var(--ord);cursor:pointer;transition:all .2s;z-index:5;line-height:1}
 .tts-btn:hover{border-color:var(--or);color:var(--orl)}
 .tts-btn.playing{border-color:var(--or);color:var(--orl);animation:tts-pulse 1.2s ease-in-out infinite}
@@ -578,8 +578,8 @@ button.nb.show{display:block}
 
   <div class="CR">
     <div class="zbar zf" id="zbar"><span id="zico">🟢</span><span id="zlbl">Zone facile</span></div>
-    <div class="scene-card" id="scene-card">
-      <button class="tts-btn" id="tts-btn" onclick="ttsBtnClick()" title="Lire à voix haute">🔊</button>
+    <div class="scene-card" id="scene-card" onclick="toggleScene()" title="Toucher pour réduire">
+      <button class="tts-btn" id="tts-btn" onclick="ttsBtnClick(event)" title="Lire à voix haute">🔊</button><span class="scene-collapse-hint">▲ réduire</span>
       <div class="rencontre-badge" id="scene-badge" style="display:none"></div>
       <span class="scene-icon" id="scene-icon">🌅</span>
       <div class="scene-lieu" id="scene-lieu">Départ</div>
@@ -1510,10 +1510,11 @@ function getScene(km_val){
   return best;
 }
 let _currentScene = null;
-function ttsBtnClick(){
+function ttsBtnClick(e){if(e)e.stopPropagation();
   if(window.speechSynthesis?.speaking){ TTS.arreter(); }
   else if(_currentScene){ TTS.lireScene(_currentScene); }
 }
+function toggleScene(){const sc=document.getElementById("scene-card");if(sc)sc.classList.toggle("collapsed");}
 function renderLieu(){
   const q=ETAPE?.questions[qIdx];
   const km_q=q?.km||km;
@@ -1634,7 +1635,7 @@ function renderQ(){
   document.getElementById("jp").className="jp";
   document.getElementById("alea").className="alea";
   document.getElementById("nb").className="nb";
-  renderAnswers(q);renderLieu();
+  renderAnswers(q);renderLieu();const _sc=document.getElementById("scene-card");if(_sc)_sc.classList.remove("collapsed");
 }
 function renderAnswers(q){
   const zone=document.getElementById("anszone");zone.innerHTML="";
