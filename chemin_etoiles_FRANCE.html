@@ -856,8 +856,12 @@ const TTS = (function(){
         window.speechSynthesis.pause();
         window.speechSynthesis.resume();
       }, 10000);
-      u.onend = () => clearInterval(_iosKA);
-      u.onerror = () => clearInterval(_iosKA);
+      u.onend = () => { clearInterval(_iosKA);
+        const sc=document.getElementById("scene-card"); if(sc)sc.classList.add("collapsed");
+        const btn=document.getElementById("tts-btn"); if(btn){btn.textContent="🔊";btn.title="Lire à voix haute";} currentUtterance=null; };
+      u.onerror = () => { clearInterval(_iosKA);
+        const sc=document.getElementById("scene-card"); if(sc)sc.classList.add("collapsed");
+        const btn=document.getElementById("tts-btn"); if(btn){btn.textContent="🔊";btn.title="Lire à voix haute";} currentUtterance=null; };
     }, 50);
   }
 
