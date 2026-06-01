@@ -780,6 +780,9 @@ const TTS = (function(){
       const btn = document.getElementById('tts-btn');
       if (btn) { btn.textContent = '🔊'; btn.title = 'Lire à voix haute'; }
       currentUtterance = null;
+      // Replier la scène automatiquement après lecture
+      const sc=document.getElementById('scene-card');
+      if(sc)sc.classList.add('collapsed');
     };
 
     currentUtterance = u;
@@ -1538,10 +1541,12 @@ function renderLieu(){
     document.getElementById("scene-icon").textContent=sc.icon;
     document.getElementById("scene-lieu").textContent=sc.lieu;
     document.getElementById("scene-txt").textContent=sc.txt;
-    // Lecture TTS uniquement si la scène a changé
-    if(TTS.enabled && sc !== _lastReadScene){
+    // Ouvrir + lire uniquement si la scène a changé
+    if(sc !== _lastReadScene){
       _lastReadScene = sc;
-      TTS.lireScene(sc);
+      const _scEl=document.getElementById("scene-card");
+      if(_scEl)_scEl.classList.remove("collapsed");
+      if(TTS.enabled){ TTS.lireScene(sc); }
     }
   }
   checkKm(km);
@@ -1635,7 +1640,7 @@ function renderQ(){
   document.getElementById("jp").className="jp";
   document.getElementById("alea").className="alea";
   document.getElementById("nb").className="nb";
-  renderAnswers(q);renderLieu();const _sc=document.getElementById("scene-card");if(_sc)_sc.classList.remove("collapsed");
+  renderAnswers(q);renderLieu();
 }
 function renderAnswers(q){
   const zone=document.getElementById("anszone");zone.innerHTML="";
