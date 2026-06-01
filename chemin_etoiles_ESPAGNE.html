@@ -290,7 +290,25 @@ button.nb.show{display:block}
   #frontier-screen .stripe-gold  { background:#f1bf00; width:100%; height:64px; display:flex; align-items:center; justify-content:center; }
   #frontier-screen .stripe-gold .escudo { font-size:2.8rem; }
 
-  </style>
+  
+@media(min-width:601px) and (max-width:1024px){
+  :root{ --fs:18px; --fsl:22px; --fsxl:27px; }
+  .qb{
+    padding:18px 20px !important;
+    font-size:19px !important;
+    line-height:1.6 !important;
+    border-radius:12px !important;
+    min-height:56px;
+    margin-bottom:6px;
+  }
+  #qtxt{ font-size:20px !important; line-height:1.7 !important; }
+  #qmeta,#qtag{ font-size:14px !important; }
+  .anszone{ padding:8px 16px !important; gap:10px; display:flex; flex-direction:column; }
+  .nb{ padding:20px !important; font-size:18px !important; border-radius:30px !important; }
+  #fbtit{ font-size:19px !important; }
+  #fbexp{ font-size:16px !important; line-height:1.7 !important; }
+}
+</style>
 </head>
 <body>
 
@@ -1588,7 +1606,19 @@ function checkOpen(input,answer){
 function zoneOf(k){if(k<=10)return{cls:"zf",ico:"🟢",lbl:"Zone facile — km 1 à 10"};if(k<=30)return{cls:"zm",ico:"🟡",lbl:"Zone moyenne — km 11 à 30"};if(k<=60)return{cls:"zh",ico:"🔴",lbl:"Zone difficile — km 31 à 60"};return{cls:"zx",ico:"⚡",lbl:"Zone très difficile — km 61+"};}
 function pen(k){if(k<=10)return 2;if(k<=60)return 1;return 0;}
 function pts(k){if(k<=10)return 1;if(k<=30)return 2;if(k<=60)return 3;return 4;}
+function scrollCRTop(){
+  const cr=document.querySelector(".CR");
+  if(cr){cr.scrollTop=0;cr.scrollIntoView({behavior:"smooth",block:"start"});}
+  else{window.scrollTo({top:0,behavior:"smooth"});}
+}
+function scrollCRTo(elId,pos){
+  const el=document.getElementById(elId);
+  if(!el)return;
+  if(pos==="bottom"){setTimeout(()=>{el.scrollIntoView({behavior:"smooth",block:"nearest"});},80);}
+  else{el.scrollIntoView({behavior:"smooth",block:"start"});}
+}
 function renderQ(){
+  setTimeout(scrollCRTop,60);
   const qs=ETAPE?.questions||[];
   if(qIdx>=qs.length){showFin();return;}
   const q=qs[qIdx];answered=false;elimCh=[];
@@ -1641,7 +1671,7 @@ function resolve(ok,km_q,q){
   document.getElementById("fbexp").textContent=q.expl;
   if(!ok)renderJP();
   rollAleaDisplay();
-  document.getElementById("nb").className="nb show";
+  document.getElementById("nb").className="nb show";setTimeout(()=>scrollCRTo("nb","bottom"),100);
   renderSac();checkFoundItems(km);
 }
 function renderJP(){
