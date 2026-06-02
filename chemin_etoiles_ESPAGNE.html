@@ -1155,6 +1155,14 @@ async function startEtape(num){
   qIdx=0; km=0; score=0; immunity=0; thrown=0;
   JUNK.forEach(j=>j.thrown=false);
   powers=[]; foundItems=[]; meteoShield=false; answered=false; elimCh=[];
+  // Bourdon : éliminer automatiquement 1 mauvais choix
+  if(bourdonActive && q.fmt==="qcm" && q.ch && q.ch.length>2){
+    const wrongs=q.ch.map((_,i)=>i).filter(i=>i!==q.ans);
+    if(wrongs.length>0){
+      const toElim=wrongs[Math.floor(Math.random()*wrongs.length)];
+      elimCh=[toElim];
+    }
+  }
 
   showLoading(false);
   showScreen("sg");
@@ -1287,7 +1295,7 @@ const PDEFS=[
   {id:"branche", n:"Branche", ico:"🌿",desc:"Prochain recul annulé"},
 ];
 const FOUND_ITEMS=[
-  {id:"bourdon", ico:"🪄",n:"Le Bourdon",   desc:"Le long bâton du pèlerin — appui, protection, sonde pour les gués.",bonus:"Questions ouvertes → QCM",effet:"qcm_open", cond_km:3,  badge:{id:"fi03",ico:"🪄",nom:"Sello : Le Bourdon",   lieu:"Km 3",   desc:"Le bourdon est l'insigne du pèlerin avec la coquille et l'escarcelle. Sa hauteur idéale est celle de son porteur."}},
+  {id:"bourdon", ico:"🪄",n:"Le Bourdon",   desc:"Le long bâton du pèlerin — appui, protection, sonde pour les gués.",bonus:"Élimine un mauvais choix par question",effet:"elim_one", cond_km:3,  badge:{id:"fi03",ico:"🪄",nom:"Sello : Le Bourdon",   lieu:"Km 3",   desc:"Le bourdon est l'insigne du pèlerin avec la coquille et l'escarcelle. Sa hauteur idéale est celle de son porteur."}},
   {id:"escarcelle",ico:"👜",n:"L'Escarcelle",desc:"La petite bourse en cuir du pèlerin. Symbole de la pauvreté volontaire.",bonus:"+2 immunités permanentes",effet:"imm2", cond_km:5,  badge:{id:"fi01",ico:"👜",nom:"Sello : L'Escarcelle",lieu:"Km 5",   desc:"L'escarcelle (vieux français) était l'attribut obligatoire du pèlerin. Elle symbolisait la pauvreté volontaire — voyager léger pour voir plus grand."}},
   {id:"pelerine",ico:"🧥",n:"La Pèlerine",  desc:"Le court manteau du pèlerin. Son nom vient du mot 'pèlerin' lui-même !",bonus:"Protège contre la mauvaise météo",effet:"meteo_shield",cond_km:15,badge:{id:"fi02",ico:"🧥",nom:"Sello : La Pèlerine",lieu:"Km 15",  desc:"La pèlerine a donné son nom au vêtement. Les pèlerins médiévaux la portaient sur la tunique et y cousaient leur coquille Saint-Jacques."}},
   {id:"gourde",  ico:"🫙",n:"La Gourde",    desc:"Une gourde en terre cuite imperméabilisée à la cire d'abeille.",bonus:"+1 km bonus par jour ensoleillé",effet:"sun_bonus",cond_km:22, badge:{id:"fi04",ico:"🫙",nom:"Sello : La Gourde",    lieu:"Km 22",  desc:"La gourde était indispensable dans la Beauce où l'eau manque. Ce paysan beauceron te la donne pleine d'eau fraîche tirée d'un puits de 80 mètres."}},
@@ -1441,6 +1449,7 @@ function checkFoundItems(km_val){
 function applyFoundEffect(fi){
   if(fi.effet==="imm2"){immunity+=2;updStats();}
   if(fi.effet==="meteo_shield"){meteoShield=true;}
+  if(fi.effet==="elim_one"){bourdonActive=true;}
 }
 
 /* ════════════════════════════════════════════════════
