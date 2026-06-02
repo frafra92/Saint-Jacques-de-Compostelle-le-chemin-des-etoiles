@@ -312,9 +312,9 @@ button.nb.show{display:block}
 }
 
 /* Bouton continuer flèche fixe */
-#btn-next-fixed{display:none;position:fixed;bottom:calc(32px + env(safe-area-inset-bottom,0px));right:22px;width:64px;height:64px;border-radius:50%;background:var(--or);border:none;font-size:28px;color:#fff;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.45);z-index:200;transition:transform .15s,opacity .2s;align-items:center;justify-content:center;-webkit-appearance:none;}
+#btn-next-fixed{display:none;position:fixed;bottom:calc(36px + env(safe-area-inset-bottom,0px));right:50%;transform:translateX(50%);width:80px;height:80px;border-radius:12px;background:none;border:none;padding:0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:200;transition:transform .15s,opacity .2s;align-items:center;justify-content:center;-webkit-appearance:none;}
 #btn-next-fixed.show{display:flex;}
-#btn-next-fixed:active{transform:scale(.92);}
+#btn-next-fixed:active{transform:translateX(50%) scale(.90);}
 </style>
 </head>
 <body>
@@ -624,7 +624,7 @@ button.nb.show{display:block}
     </div>
   </div>
 </div>
-<button id="btn-next-fixed" onclick="nextQ()" aria-label="Continuer">›</button>
+<button id="btn-next-fixed" onclick="nextQ()" aria-label="Continuer le chemin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="80" height="80"><rect width="64" height="64" rx="10" fill="#1a3fa8"/><g transform="translate(32,40)" stroke="#f5d200" stroke-linecap="round" stroke-width="3.5" fill="none"><line x1="0" y1="0" x2="0" y2="-23"/><line x1="0" y1="0" x2="-7.5" y2="-21.8"/><line x1="0" y1="0" x2="-14" y2="-18.5"/><line x1="0" y1="0" x2="-19" y2="-13.5"/><line x1="0" y1="0" x2="-22" y2="-7"/><line x1="0" y1="0" x2="7.5" y2="-21.8"/><line x1="0" y1="0" x2="14" y2="-18.5"/><line x1="0" y1="0" x2="19" y2="-13.5"/><line x1="0" y1="0" x2="22" y2="-7"/><ellipse cx="0" cy="1" rx="10" ry="5.5" fill="#f5d200" stroke="none"/></g></svg></button>
 
 <!-- ══ FIN ÉTAPE ══ -->
 <div id="sf" class="screen">
