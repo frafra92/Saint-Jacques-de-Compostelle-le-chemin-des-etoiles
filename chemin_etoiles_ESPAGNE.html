@@ -312,9 +312,9 @@ button.nb.show{display:block}
 }
 
 /* Bouton continuer flèche fixe */
-#btn-next-fixed{display:none;position:fixed;bottom:calc(28px + env(safe-area-inset-bottom,0px));right:20px;width:72px;height:72px;border-radius:12px;background:none;border:none;padding:0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:200;transition:transform .15s,opacity .2s;align-items:center;justify-content:center;-webkit-appearance:none;}
+#btn-next-fixed{display:none;position:fixed;top:50%;right:12px;transform:translateY(-50%);width:72px;height:72px;border-radius:12px;background:none;border:none;padding:0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:200;transition:opacity .2s;align-items:center;justify-content:center;-webkit-appearance:none;}
 #btn-next-fixed.show{display:flex;}
-#btn-next-fixed:active{transform:scale(.90);}
+#btn-next-fixed:active{transform:translateY(-50%) scale(.90);}
 </style>
 </head>
 <body>
