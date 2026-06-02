@@ -340,25 +340,25 @@ h1 {
 
 <!-- OVERLAY INSCRIPTION PÈLERIN -->
 <div class="overlay active" id="profil-overlay">
-  <div class="overlay-box">
+  <div class="overlay-box" style="text-align:center;padding:36px 28px">
     <div class="ico">🐚</div>
-    <h2>Bienvenue, Pèlerin !</h2>
-    <p style="font-size:17px;line-height:1.6;margin-bottom:6px">Entrez votre prénom pour figurer au classement des pèlerins.</p>
-    <p style="font-size:14px;color:#6a5030;margin-bottom:22px;background:#1a1000;border-radius:8px;padding:10px 14px;">🔒 Aucun compte requis — vos données restent sur votre appareil</p>
-    <div class="field-group">
-      <input type="text" id="profil-nom" placeholder="Votre prénom ou pseudo" maxlength="30" autocomplete="given-name" style="font-size:18px;padding:14px 16px">
-      <input type="text" id="profil-ville" placeholder="Votre ville (ex : Paris, Lyon…)" maxlength="40" autocomplete="address-level2" style="font-size:18px;padding:14px 16px">
-    </div>
-    <button class="btn-play" onclick="saveProfil()">
-      <span class="ico-btn">🚶</span> Commencer le pèlerinage
+    <h2 style="font-size:20px;margin-bottom:8px">Bienvenue !</h2>
+    <p style="font-size:16px;color:#a08050;margin-bottom:24px;line-height:1.6">Créé par François pour sa mère</p>
+    <label style="display:block;text-align:left;font-size:13px;color:#a08050;margin-bottom:8px;font-family:'Cinzel',serif;letter-spacing:.5px">Votre prénom (facultatif)</label>
+    <input id="profil-nom" type="text" placeholder="ex : Marie"
+      style="width:100%;padding:16px;font-size:18px;border-radius:12px;border:1px solid #5a4000;background:#0e0900;color:#e8c87a;font-family:'Lora',serif;box-sizing:border-box;margin-bottom:24px"
+      onkeydown="if(event.key==='Enter')saveProfil()">
+    <button onclick="saveProfil()"
+      style="width:100%;padding:22px;font-size:20px;font-family:'Cinzel',serif;font-weight:700;background:#c8a020;color:#0e0900;border:none;border-radius:40px;cursor:pointer;box-shadow:0 4px 20px rgba(200,160,30,.4);margin-bottom:14px">
+      🚶 Commencer
     </button>
-    <button onclick="skipProfil()" style="display:block;width:100%;margin-top:14px;padding:16px;font-size:16px;font-family:'Lora',serif;background:transparent;border:2px solid #3a2810;border-radius:12px;color:#8a6840;cursor:pointer;letter-spacing:0.3px;">
-      Jouer sans classement
+    <button onclick="skipProfil()"
+      style="width:100%;padding:14px;font-size:15px;font-family:'Lora',serif;background:transparent;border:1px solid #5a4000;border-radius:30px;color:#a08050;cursor:pointer">
+      Continuer sans prénom
     </button>
-    <p style="font-size:12px;color:#3a2810;margin-top:10px">Vous pourrez vous inscrire plus tard depuis l'accueil</p>
-    <div style="display:none" onclick="skipProfil()">Continuer sans s'inscrire</div>
   </div>
 </div>
+
 
 <!-- CONTENU PRINCIPAL -->
 <div class="wrap">
@@ -446,13 +446,9 @@ function getProfil(){ try{ return JSON.parse(localStorage.getItem(PROFIL_KEY)||'
 function setProfil(p){ try{ localStorage.setItem(PROFIL_KEY,JSON.stringify(p)); }catch(e){} }
 
 function saveProfil(){
-  const nom   = document.getElementById('profil-nom').value.trim();
+  const nom   = document.getElementById('profil-nom').value.trim() || 'Pèlerin';
   const ville = document.getElementById('profil-ville').value.trim();
-  if(!nom){
-    toast('✍️ Entrez votre prénom pour continuer');
-    document.getElementById('profil-nom').focus();
-    return;
-  }
+
   setProfil({ nom, ville, since: Date.now() });
   document.getElementById('profil-overlay').classList.remove('active');
   toast('🐚 Bonjour ' + nom + ' ! Ultreia !');
