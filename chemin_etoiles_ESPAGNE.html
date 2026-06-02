@@ -546,7 +546,7 @@ button.nb.show{display:block}
         <div class="fleche-sub" id="fleche-sub">Km 0</div>
       </div>
     </div>
-    <div class="lieu-w">
+    <div class="lieu-w" style="display:none" id="lieu-w">
       <div class="lieu-ph" id="lieu-ph">🗺️</div>
       <img id="lieu-img" class="lieu-img" style="display:none" alt="">
       <div class="lieu-ov">
@@ -555,7 +555,7 @@ button.nb.show{display:block}
       </div>
     </div>
     <div class="badges" id="badges"></div>
-    <div class="sac">
+    <div class="sac" style="display:none" id="sac-zone">
       <div class="sact" title="Poids du sac et immunités">🎒 <span id="sacwt">12 kg</span> · <span id="vimm" style="color:#d09030">0 🛡️</span></div>
       
       <div class="chips" id="jchips"></div>
@@ -564,7 +564,7 @@ button.nb.show{display:block}
       <div class="sach" id="powlbl"></div>
       <div class="chips" id="pchips"></div>
     </div>
-    <div class="audrow">
+    <div class="audrow" style="display:none">
       <button class="adbtn" id="adbtn" onclick="toggleAudio()">🔔 Son ON</button>
       <input type="range" class="vol" id="vol" min="0" max="1" step=".05" value=".4" oninput="setVol(this.value)">
     </div>
@@ -590,6 +590,13 @@ button.nb.show{display:block}
     </div>
     <div class="anszone" id="anszone"></div>
     <div class="fbwrap">
+      <div id="progmap" style="display:none;text-align:center;padding:10px 0 4px;border-bottom:1px solid var(--b3);margin-bottom:8px">
+        <div id="progmap-bar" style="position:relative;height:18px;background:var(--b2);border-radius:20px;margin:0 12px 6px;overflow:hidden">
+          <div id="progmap-fill" style="height:100%;background:linear-gradient(90deg,#8b6914,var(--or));border-radius:20px;transition:width .6s ease;width:0%"></div>
+          <span id="progmap-pilgrim" style="position:absolute;top:50%;transform:translateY(-50%);transition:left .6s ease;left:0%;font-size:16px;line-height:1">🚶</span>
+        </div>
+        <div id="progmap-label" style="font-size:13px;color:var(--ord);font-family:'Cinzel',serif"></div>
+      </div>
       <div class="fb" id="fb">
         <div class="fbtit" id="fbtit"></div>
         <div class="fbexp" id="fbexp"></div>
@@ -623,7 +630,18 @@ button.nb.show{display:block}
     <span class="finico" id="fin-ico">⛪</span>
     <div class="fint" id="fin-titre">Étape accomplie !</div>
     <div class="fintxt" id="fin-txt"></div>
-    <div class="finsc" id="finsc">0</div>
+    <div id="fin-carte" style="margin:14px auto;max-width:340px;background:var(--b1);border:1px solid var(--b3);border-radius:14px;padding:14px 18px">
+  <div style="font-family:'Cinzel',serif;font-size:10px;color:var(--ord);letter-spacing:.5px;margin-bottom:8px;text-align:center" id="fin-carte-titre">Chemin parcouru</div>
+  <div style="position:relative;height:26px;background:var(--b2);border-radius:20px;overflow:visible;margin-bottom:6px">
+    <div id="fin-carte-fill" style="height:100%;background:linear-gradient(90deg,#8b6914,var(--or));border-radius:20px;transition:width 1s ease;width:0%"></div>
+    <span id="fin-carte-pilgrim" style="position:absolute;top:50%;transform:translateY(-50%);transition:left 1s ease;font-size:20px;line-height:1;left:0%">🚶</span>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--pd)">
+    <span id="fin-carte-from"></span><span id="fin-carte-to"></span>
+  </div>
+  <div style="text-align:center;font-size:14px;color:var(--or);font-family:'Cinzel',serif;margin-top:5px" id="fin-carte-km"></div>
+</div>
+<div class="finsc" id="finsc">0</div>
     <div class="finl">Points gagnés</div>
     <div class="finb" id="finb"></div>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px">
@@ -1634,7 +1652,11 @@ function scrollCRTo(elId,pos){
   else{el.scrollIntoView({behavior:"smooth",block:"start"});}
 }
 function renderQ(){
+  const _pmq=document.getElementById("progmap");
+  if(_pmq)_pmq.style.display="none";
   setTimeout(scrollCRTop,60);
+  const _pmhide=document.getElementById("progmap");
+  if(_pmhide)_pmhide.style.display="none";
   const qs=ETAPE?.questions||[];
   if(qIdx>=qs.length){showFin();return;}
   const q=qs[qIdx];answered=false;elimCh=[];
@@ -1688,6 +1710,26 @@ function resolve(ok,km_q,q){
   if(!ok)renderJP();
   rollAleaDisplay();
   document.getElementById("nb").className="nb show";setTimeout(()=>scrollCRTo("nb","bottom"),100);
+  // Mini-carte progression
+  if(ok){
+    const _T=ETAPE?.distance_km||1;
+    const _pct=Math.min(100,Math.round((km/_T)*100));
+    const _pm=document.getElementById("progmap");
+    const _pf=document.getElementById("progmap-fill");
+    const _pp=document.getElementById("progmap-pilgrim");
+    const _pl=document.getElementById("progmap-label");
+    if(_pm){
+      _pm.style.display="block";
+      setTimeout(()=>{
+        if(_pf)_pf.style.width=_pct+"%";
+        if(_pp)_pp.style.left="calc("+_pct+"% - 10px)";
+        if(_pl)_pl.textContent="⛰️ "+km+" km / "+_T+" km — "+_pct+"% du chemin";
+      },100);
+    }
+  } else {
+    const _pm=document.getElementById("progmap");
+    if(_pm)_pm.style.display="none";
+  }
   renderSac();checkFoundItems(km);
 }
 function renderJP(){
@@ -1731,6 +1773,23 @@ function showFin(){
   showScreen("sf");
   document.getElementById("fin-ico").textContent=ETAPE.fin_ico||"🐚";
   document.getElementById("fin-titre").textContent=ETAPE.fin_titre||"Étape accomplie !";
+  // Animer la carte de fin
+  setTimeout(()=>{
+    const _ff=document.getElementById("fin-carte-fill");
+    const _fp=document.getElementById("fin-carte-pilgrim");
+    const _fk=document.getElementById("fin-carte-km");
+    const _fc2=document.getElementById("fin-carte-from");
+    const _ft2=document.getElementById("fin-carte-to");
+    const _fct=document.getElementById("fin-carte-titre");
+    if(_fc2)_fc2.textContent="🚩 "+(ETAPE.from||"");
+    if(_ft2)_ft2.textContent=(ETAPE.to||"")+" ⛪";
+    if(_fct)_fct.textContent="De "+(ETAPE.from||"")+" à "+(ETAPE.to||"");
+    if(_fk)_fk.textContent="✦ "+(ETAPE.distance_km||0)+" km accomplis ✦";
+    setTimeout(()=>{
+      if(_ff)_ff.style.width="100%";
+      if(_fp)_fp.style.left="calc(100% - 14px)";
+    },300);
+  },200);
   document.getElementById("fin-txt").textContent=ETAPE.fin_txt||"";
   document.getElementById("finsc").textContent=score;
   // Armoiries de Santiago
