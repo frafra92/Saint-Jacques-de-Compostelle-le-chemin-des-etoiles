@@ -1558,7 +1558,17 @@ function renderLieu(){
       _lastReadScene = sc;
       const _scEl=document.getElementById("scene-card");
       if(_scEl)_scEl.classList.remove("collapsed");
-      if(TTS.enabled){ TTS.lireScene(sc); }
+      if(TTS.enabled){
+        TTS.lireScene(sc);
+      } else {
+        // Repli auto : ~250ms par mot (vitesse lecture confortable)
+        clearTimeout(window._sceneTimer);
+        const _words = sc.txt ? sc.txt.split(" ").length : 10;
+        window._sceneTimer = setTimeout(()=>{
+          const _sc=document.getElementById("scene-card");
+          if(_sc && !_sc.classList.contains("collapsed"))_sc.classList.add("collapsed");
+        }, Math.max(3000, _words * 280));
+      }
     }
   }
   checkKm(km);
