@@ -75,10 +75,10 @@ html,body{height:100%;font-family:'Lora',Georgia,serif;background:var(--bg);colo
   }
   #qtxt{ font-size:20px !important; line-height:1.7 !important; }
   #qmeta,#qtag{ font-size:14px !important; }
-  .anszone{ padding:10px 16px !important; gap:14px; display:flex; flex-direction:column; }
-  .nb{ padding:28px !important; font-size:22px !important; border-radius:40px !important; box-shadow:0 4px 20px rgba(200,160,30,.35); }
-  #fbtit{ font-size:24px !important; }
-  #fbexp{ font-size:17px !important; line-height:1.8 !important; }
+  .anszone{ padding:8px 16px !important; gap:10px; display:flex; flex-direction:column; }
+  .nb{ padding:20px !important; font-size:18px !important; border-radius:30px !important; }
+  #fbtit{ font-size:19px !important; }
+  #fbexp{ font-size:16px !important; line-height:1.7 !important; }
 }
 
 @media(max-width:600px){
@@ -162,7 +162,7 @@ button.chip.found{border-color:#5a4820;background:#1e1400;color:#d4b860}
 .rb-gueux{background:#0a150a;border:1px solid #3a5a3a;color:#88b888}
 .rb-pelerin{background:#1a1000;border:1px solid #5a4a20;color:#c8a050}
 .qbody{padding:7px 13px 4px;flex-shrink:0}
-.qtag{display:none;font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:9px;border:1px solid var(--b4);background:var(--bg);color:#a07840;display:inline-block;margin-bottom:4px}
+.qtag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:9px;border:1px solid var(--b4);background:var(--bg);color:#a07840;display:inline-block;margin-bottom:4px}
 .qmeta{font-size:11px;color:#4a3010;margin-bottom:4px}
 .qtxt{font-size:var(--fsl);color:var(--p);line-height:1.6}
 .anszone{padding:5px 13px;flex-shrink:0}
@@ -559,7 +559,7 @@ button.nb.show{display:block}
         <div class="cl-t" id="cl-titre">🐚 Paris → Chartres</div>
         <div class="cl-s" id="cl-sous">Via Turonensis · GR655</div>
       </div>
-      <button class="cred-btn" onclick="openCredencial()" title="Voir ta Credencial" style="display:none">
+      <button class="cred-btn" onclick="openCredencial()" title="Voir ta Credencial">
         <span style="font-size:17px;line-height:1">📜</span>
         <span style="font-size:8px;color:var(--ord);font-family:'Cinzel',serif">Credencial</span>
       </button>
@@ -573,15 +573,15 @@ button.nb.show{display:block}
       <div class="progl"><span id="prog-from">Paris</span><span id="vpct">0%</span><span id="prog-to">Chartres</span></div>
       <div class="pb"><div class="pf" id="pf" style="width:0%"></div></div>
     </div>
-    <div class="map-w" style="display:none">
+    <div class="map-w">
       <svg class="map-svg" id="map-svg" viewBox="0 0 260 78"></svg>
       <div class="mkm" id="mkm">0 km</div>
     </div>
-    <div class="meteo m-cloud" id="metbar" style="display:none">
+    <div class="meteo m-cloud" id="metbar">
       <span class="mico" id="mico">☁️</span>
       <span class="mtxt" id="mtxt">Ciel couvert</span>
     </div>
-    <div class="fleche-jaune" style="display:none">
+    <div class="fleche-jaune">
       <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;animation:pulse-arrow 1.5s ease-in-out infinite">
         <svg width="20" height="20" viewBox="0 0 90 90"><rect width="90" height="90" rx="10" fill="#003399"/><g transform="translate(27,53)" stroke="#FFD700" stroke-width="5.5" stroke-linecap="round"><line x1="0" y1="0" x2="-22" y2="-40"/><line x1="0" y1="0" x2="-9" y2="-44"/><line x1="0" y1="0" x2="4" y2="-44"/><line x1="0" y1="0" x2="17" y2="-40"/><line x1="0" y1="0" x2="28" y2="-31"/><line x1="0" y1="0" x2="36" y2="-18"/><line x1="0" y1="0" x2="39" y2="-3"/><line x1="0" y1="0" x2="37" y2="12"/><line x1="0" y1="0" x2="-13" y2="13"/><line x1="0" y1="0" x2="-26" y2="5"/></g><circle cx="27" cy="53" r="3" fill="#FFD700"/></svg>
         <svg width="20" height="20" viewBox="0 0 60 60"><rect width="60" height="60" rx="4" fill="#181200"/><polygon points="8,23 40,23 40,14 54,30 40,46 40,37 8,37" fill="#FFD700"/></svg>
@@ -591,7 +591,7 @@ button.nb.show{display:block}
         <div class="fleche-sub" id="fleche-sub">Km 0</div>
       </div>
     </div>
-    <div class="lieu-w" style="display:none" id="lieu-w">
+    <div class="lieu-w">
       <div class="lieu-ph" id="lieu-ph">🗺️</div>
       <img id="lieu-img" class="lieu-img" style="display:none" alt="">
       <div class="lieu-ov">
@@ -600,7 +600,7 @@ button.nb.show{display:block}
       </div>
     </div>
     <div class="badges" id="badges"></div>
-    <div class="sac" style="display:none" id="sac-zone">
+    <div class="sac">
       <div class="sact" title="Poids du sac et immunités">🎒 <span id="sacwt">12 kg</span> · <span id="vimm" style="color:#d09030">0 🛡️</span></div>
       
       <div class="chips" id="jchips"></div>
@@ -609,18 +609,20 @@ button.nb.show{display:block}
       <div class="sach" id="powlbl"></div>
       <div class="chips" id="pchips"></div>
     </div>
-    <div class="audrow" style="display:none">
+    <div class="audrow">
       <button class="adbtn" id="adbtn" onclick="toggleAudio()">🔔 Son ON</button>
       <input type="range" class="vol" id="vol" min="0" max="1" step=".05" value=".4" oninput="setVol(this.value)">
     </div>
     <div class="svrow">
-      <button class="svb" onclick="saveGame()" title="Sauvegarder">💾</button>
-      <button class="svb" onclick="goHome()" title="Accueil">🏠</button>
+      <button class="svb" onclick="saveGame()">💾 Sauver</button>
+      <button class="svb" onclick="loadGame()">📂 Reprendre</button>
+      <button class="svb" onclick="goHome()">🏠 Accueil</button>
+      <button class="svb" onclick="shareGame()" style="border-color:#285a3a;color:#70b880">🔗</button>
     </div>
   </div>
 
   <div class="CR">
-    <div class="zbar zf" id="zbar" style="display:none"><span id="zico">🟢</span><span id="zlbl">Zone facile</span></div>
+    <div class="zbar zf" id="zbar"><span id="zico">🟢</span><span id="zlbl">Zone facile</span></div>
     <div class="scene-card" id="scene-card" onclick="toggleScene()" title="Toucher pour réduire">
       <button class="tts-btn" id="tts-btn" onclick="ttsBtnClick(event)" title="Lire à voix haute">🔊</button><span class="scene-collapse-hint">▲ réduire</span>
       <div class="rencontre-badge" id="scene-badge" style="display:none"></div>
@@ -656,52 +658,31 @@ button.nb.show{display:block}
       </div>
     </div>
     <div class="nextwrap">
-      <button class="nb" id="nb" onclick="nextQ()">👉 Question suivante</button>
+      <button class="nb" id="nb" onclick="nextQ()">Continuer le chemin ›</button>
     </div>
   </div>
 </div>
 
 <!-- ══ FIN ÉTAPE ══ -->
 <div id="sf" class="screen">
-  <div class="fin" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 20px;text-align:center;gap:0">
-
-    <!-- Icône + titre étape -->
-    <span class="finico" id="fin-ico" style="font-size:52px;margin-bottom:8px">⛪</span>
-    <div class="fint" id="fin-titre" style="font-size:22px;margin-bottom:6px">Étape accomplie !</div>
-    <div class="fintxt" id="fin-txt" style="font-size:15px;color:var(--pd);line-height:1.6;max-width:340px;margin-bottom:20px"></div>
-
-    <!-- Carte animée pèlerin -->
-    <div style="width:100%;max-width:360px;margin:0 auto 24px">
-      <div style="display:flex;justify-content:space-between;font-family:'Cinzel',serif;font-size:12px;color:var(--ord);margin-bottom:8px;padding:0 4px">
-        <span id="fin-carte-from">🚩</span>
-        <span id="fin-carte-to">⛪</span>
-      </div>
-      <div style="position:relative;height:32px;background:var(--b2);border-radius:30px;overflow:visible">
-        <div id="fin-carte-fill" style="height:100%;background:linear-gradient(90deg,#5a3a00,var(--or));border-radius:30px;transition:width 1.2s ease;width:0%"></div>
-        <span id="fin-carte-pilgrim" style="position:absolute;top:50%;transform:translateY(-50%);font-size:26px;line-height:1;transition:left 1.2s ease;left:2px">🚶</span>
-      </div>
-      <div style="text-align:center;font-family:'Cinzel',serif;font-size:14px;color:var(--or);margin-top:10px" id="fin-carte-km"></div>
+  <div class="fin">
+    <img class="fin-arms" id="fin-arms" src="" alt="" onerror="this.style.display='none'">
+    <span class="finico" id="fin-ico">⛪</span>
+    <div class="fint" id="fin-titre">Étape accomplie !</div>
+    <div class="fintxt" id="fin-txt"></div>
+    <div class="finsc" id="finsc">0</div>
+    <div class="finl">Points gagnés</div>
+    <div class="finb" id="finb"></div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+      <button class="btn" id="fin-next-btn" onclick="startNextEtape()" style="display:none">Étape suivante ›</button>
+      <button class="btn btn-dim" onclick="goHome()">🏠 Accueil</button>
+      <a class="btn btn-dim" href="leaderboard.html" style="text-decoration:none">🏆 Classement</a>
+      <button class="btn btn-share" onclick="shareGame()">🔗 Partager</button>
     </div>
-
-    <!-- Score -->
-    <div class="finsc" id="finsc" style="font-size:36px;font-weight:700;color:var(--or)">0</div>
-    <div class="finl" style="font-size:13px;color:var(--ord);margin-bottom:8px">points gagnés</div>
-    <div class="finb" id="finb" style="font-size:13px;color:var(--or);margin-bottom:24px"></div>
-
-    <!-- Boutons -->
-    <div style="display:flex;flex-direction:column;gap:14px;width:100%;max-width:320px">
-      <button class="btn" id="fin-next-btn" onclick="startNextEtape()"
-        style="display:none;padding:22px;font-size:20px;background:var(--or);color:#0e0900;border:none;border-radius:40px;font-family:'Cinzel',serif;font-weight:700;box-shadow:0 4px 24px rgba(200,160,30,.4)">
-        Étape suivante ›
-      </button>
-      <button class="btn btn-dim" onclick="goHome()"
-        style="padding:16px;font-size:16px;width:100%">
-        🏠 Accueil
-      </button>
-    </div>
-
   </div>
-</div></div><!-- fin app -->
+</div>
+
+</div><!-- fin app -->
 
 <!-- Overlays -->
 <div class="overlay" id="ovl" onclick="closeAllPopups()"></div>
@@ -1299,16 +1280,14 @@ function showEspagneInvitation(){
 }
 
 function startNextEtape(){
-  // Utiliser ETAPES_ORDRE pour trouver la vraie étape suivante (gère 1b, 1c)
-  const idx = ETAPES_ORDRE.indexOf(etapeNum);
-  const next = idx >= 0 && idx < ETAPES_ORDRE.length - 1 ? ETAPES_ORDRE[idx + 1] : null;
-  if(next && ETAPES_DISPO.includes(next) && isEtapeJouable(next)){
+  const next = ETAPES_DISPO.find(n => n > etapeNum);
+  if(next && isEtapeJouable(next)){
     startEtape(next);
-  } else if(next && ETAPES_DISPO.includes(next)){
+  } else if(next){
     toast("⏳ L'étape suivante sera débloquée une fois celle-ci terminée.");
   } else {
     // France terminée (étape 20 complète) → proposer l'Espagne
-    if(etapeNum === 20 || etapeNum >= 20){
+    if(etapeNum >= 20){
       showEspagneInvitation();
     } else {
       toast("🐚 Toutes les étapes disponibles sont terminées ! Ultreia !");
@@ -1907,7 +1886,8 @@ function scrollCRTop(){
   const cr = getCR();
   if(cr) cr.scrollTo({ top: 0, behavior: "smooth" });
 }
-function renderQ(){  // Scroll vers le haut de la zone de jeu (nouvelle question)
+function renderQ(){
+  // Scroll vers le haut de la zone de jeu (nouvelle question)
   setTimeout(scrollCRTop, 60);
   const qs=ETAPE?.questions||[];
   if(qIdx>=qs.length){showFin();return;}
@@ -2011,21 +1991,39 @@ function showFin(){
   showScreen("sf");
   document.getElementById("fin-ico").textContent=ETAPE.fin_ico||"🐚";
   document.getElementById("fin-titre").textContent=ETAPE.fin_titre||"Étape accomplie !";
-  // Animer la carte de fin
-  setTimeout(()=>{
-    const _ff=document.getElementById("fin-carte-fill");
-    const _fp=document.getElementById("fin-carte-pilgrim");
-    const _fk=document.getElementById("fin-carte-km");
-    const _fc2=document.getElementById("fin-carte-from");
-    const _ft2=document.getElementById("fin-carte-to");
-    if(_fc2)_fc2.textContent="🚩 "+(ETAPE.from||"");
-    if(_ft2)_ft2.textContent=(ETAPE.to||"")+" ⛪";
-    if(_fk)_fk.textContent="✦ "+(ETAPE.distance_km||0)+" km accomplis ✦";
-    setTimeout(()=>{
-      if(_ff)_ff.style.width="100%";
-      if(_fp)_fp.style.left="calc(100% - 20px)";
-    },200);
-  },300);
+  document.getElementById("fin-txt").textContent=ETAPE.fin_txt||"";
+  document.getElementById("finsc").textContent=score;
+  // Armoiries de Santiago
+  if(SANTIAGO_ARMS_B64!=="SANTIAGO_ARMS_PLACEHOLDER"){document.getElementById("fin-arms").src=SANTIAGO_ARMS_B64;document.getElementById("fin-arms").style.display="block";}
+  const nextAvail=etapeSuivante(etapeNum);
+  const btn=document.getElementById("fin-next-btn");
+  btn.style.display=nextAvail?"block":"none";
+  document.getElementById("finb").textContent=
+    "Sellos : "+[...earned].map(id=>{const b=getAllBadges().find(x=>x.id===id);return b?b.ico+" "+b.nom:"";}).filter(Boolean).join("  ·  ");
+  playBell();
+  submitLeaderboard();
+}
+
+/* ════════════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════════════ */
+function toast(msg,dur=3200){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),dur);}
+
+/* ════════════════════════════════════════════════════
+   INITIALISATION
+════════════════════════════════════════════════════ */
+function init(){
+  // Charger la sauvegarde pour la progression
+  try{
+    const sv=JSON.parse(localStorage.getItem("cdv9")||"null");
+    if(sv){earned=new Set(sv.badges||[]);progEtapes=sv.progEtapes||{};}
+  }catch(e){}
+
+  loadSantiagoArms();
+  buildEtapesGrid();
+
+  // Son au premier clic
+  document.addEventListener("click",function s(){initAC();document.removeEventListener("click",s);},{once:true});
 
   // Loading masqué par défaut (CSS), app visible
 
