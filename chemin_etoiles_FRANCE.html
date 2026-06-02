@@ -61,7 +61,7 @@ html,body{height:100%;font-family:'Lora',Georgia,serif;background:var(--bg);colo
 /* ══ JEU ══ */
 #sg{flex-direction:row}
 .CL{width:270px;flex-shrink:0;background:var(--b1);border-right:1px solid var(--b3);display:flex;flex-direction:column;overflow:hidden}
-.CR{flex:1;display:flex;flex-direction:column;overflow:hidden;overflow-y:auto;min-width:0}
+.CR{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 
 @media(min-width:601px) and (max-width:1024px){
   :root{ --fs:18px; --fsl:22px; --fsxl:27px; }
@@ -163,7 +163,7 @@ button.chip.found{border-color:#5a4820;background:#1e1400;color:#d4b860}
 .rb-troubadour{background:#1a100a;border:1px solid #8a6030;color:#d4a860}
 .rb-gueux{background:#0a150a;border:1px solid #3a5a3a;color:#88b888}
 .rb-pelerin{background:#1a1000;border:1px solid #5a4a20;color:#c8a050}
-.qbody{padding:7px 13px 4px;flex-shrink:0}
+.qbody{padding:7px 13px 4px;flex-shrink:0;overflow:hidden}
 .qtag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:9px;border:1px solid var(--b4);background:var(--bg);color:#a07840;display:inline-block;margin-bottom:4px}
 .qmeta{display:none;font-size:11px;color:#4a3010;margin-bottom:4px}
 .qtxt{font-size:var(--fsl);color:var(--p);line-height:1.6}
@@ -179,7 +179,7 @@ button.qb:disabled{cursor:default}
 button.val{padding:9px 20px;font-family:'Cinzel',serif;font-size:14px;letter-spacing:.5px;border:2px solid var(--b4);border-radius:22px;background:var(--b2);color:var(--or);cursor:pointer;transition:all .2s;-webkit-appearance:none}
 button.val:hover:not(:disabled){border-color:var(--or);background:var(--b3)}
 button.val:disabled{opacity:.5;cursor:default}
-.fbwrap{flex:1;overflow-y:auto;padding:5px 13px 6px;min-height:0}
+.fbwrap{flex:1;overflow-y:auto;padding:5px 13px 6px;min-height:0;display:none}
 .fb{border-radius:var(--rad);padding:9px 12px;font-size:var(--fs);line-height:1.65;display:none}
 .fb.show{display:block}
 .fb-bon{background:#082008;border:2px solid #285a28;color:#90dc90}
@@ -202,7 +202,7 @@ button.jc:hover{border-color:var(--or);color:var(--orl);background:#3a2000}
 .alico{font-size:24px;flex-shrink:0}
 .altit{font-family:'Cinzel',serif;font-size:13px;color:var(--p);margin-bottom:2px}
 .altxt{font-size:12px;color:var(--pd);line-height:1.5}
-.nextwrap{padding:10px 13px 10px;flex-shrink:0;margin-bottom:calc(60px + env(safe-area-inset-bottom,0px))}
+.nextwrap{display:none}
 button.nb{width:100%;padding:16px;font-family:'Cinzel',serif;font-size:var(--fsl);letter-spacing:1px;border:2px solid var(--ord);border-radius:26px;background:var(--b2);color:var(--orl);cursor:pointer;display:none;transition:all .2s;-webkit-appearance:none;margin-top:8px}
 button.nb:hover{background:var(--or);color:var(--bg);border-color:var(--or)}
 button.nb.show{display:block}
@@ -287,6 +287,11 @@ button.nb.show{display:block}
 .profil-btn{width:100%;background:var(--or);color:#060300;font-family:'Cinzel',serif;font-size:14px;font-weight:700;letter-spacing:2px;padding:13px;border:none;border-radius:30px;cursor:pointer;margin-top:8px;transition:background .15s;}
 .profil-btn:hover{background:var(--orl);}
 .profil-skip{display:block;margin-top:12px;font-size:12px;color:var(--ord);cursor:pointer;text-decoration:underline;}
+
+/* Bouton continuer flèche fixe */
+#btn-next-fixed{display:none;position:fixed;bottom:calc(32px + env(safe-area-inset-bottom,0px));right:22px;width:64px;height:64px;border-radius:50%;background:var(--or);border:none;font-size:28px;color:#fff;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.45);z-index:200;transition:transform .15s,opacity .2s;align-items:center;justify-content:center;-webkit-appearance:none;}
+#btn-next-fixed.show{display:flex;}
+#btn-next-fixed:active{transform:scale(.92);}
 </style>
 </head>
 <body>
@@ -664,6 +669,7 @@ button.nb.show{display:block}
     </div>
   </div>
 </div>
+<button id="btn-next-fixed" onclick="nextQ()" aria-label="Continuer">›</button>
 
 <!-- ══ FIN ÉTAPE ══ -->
 <div id="sf" class="screen">
@@ -1884,7 +1890,7 @@ function renderQ(){
   setTimeout(scrollCRTop, 60);
   const qs=ETAPE?.questions||[];
   if(qIdx>=qs.length){showFin();return;}
-  const q=qs[qIdx];answered=false;elimCh=[];
+  const q=qs[qIdx];answered=false;elimCh=[];const _fw=document.getElementById("fbwrap");if(_fw)_fw.style.display="none";const _bf=document.getElementById("btn-next-fixed");if(_bf)_bf.classList.remove("show");
   const z=zoneOf(q.km);
   document.getElementById("zbar").className="zbar "+z.cls;
   document.getElementById("zico").textContent=z.ico;document.getElementById("zlbl").textContent=z.lbl;
@@ -1934,7 +1940,7 @@ function resolve(ok,km_q,q){
   document.getElementById("fbexp").textContent=q.expl;
   if(!ok)renderJP();
   rollAleaDisplay();
-  document.getElementById("nb").className="nb show";
+  document.getElementById("fbwrap") && (document.getElementById("fbwrap").style.display="");const _btnNF=document.getElementById("btn-next-fixed");if(_btnNF)_btnNF.classList.add("show");
   renderSac();checkFoundItems(km);
   // Scroll vers le feedback + bouton Continuer
   setTimeout(()=>{
