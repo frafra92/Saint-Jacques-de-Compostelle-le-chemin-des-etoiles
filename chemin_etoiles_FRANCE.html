@@ -850,12 +850,11 @@ const TTS = (function(){
     window.speechSynthesis.cancel(); // reset avant speak (fix iOS)
     setTimeout(() => {
       window.speechSynthesis.speak(u);
-      // iOS keepalive : resume toutes les 10s pour éviter la coupure
+      // iOS keepalive : relance seulement si endormi (sans pause pour éviter les coupures)
       const _iosKA = setInterval(() => {
         if (!window.speechSynthesis.speaking) { clearInterval(_iosKA); return; }
-        window.speechSynthesis.pause();
-        window.speechSynthesis.resume();
-      }, 10000);
+        if (window.speechSynthesis.paused) { window.speechSynthesis.resume(); }
+      }, 5000);
       u.onend = () => { clearInterval(_iosKA);
         const sc=document.getElementById("scene-card"); if(sc)sc.classList.add("collapsed");
         const btn=document.getElementById("tts-btn"); if(btn){btn.textContent="🔊";btn.title="Lire à voix haute";} currentUtterance=null; };
