@@ -1799,13 +1799,6 @@ function renderLieu(){
       const _scEl=document.getElementById("scene-card");
       if(_scEl)_scEl.classList.remove("collapsed");
       if(TTS.enabled){ TTS.lireScene(sc); }
-      else{
-        clearTimeout(window._sceneAutoCollapse);
-        window._sceneAutoCollapse=setTimeout(()=>{
-          const _sc=document.getElementById("scene-card");
-          if(_sc)_sc.classList.add("collapsed");
-        },5000);
-      }
     }
   }
   checkKm(km);
