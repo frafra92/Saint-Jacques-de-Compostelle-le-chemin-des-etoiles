@@ -1280,14 +1280,16 @@ function showEspagneInvitation(){
 }
 
 function startNextEtape(){
-  const next = ETAPES_DISPO.find(n => n > etapeNum);
-  if(next && isEtapeJouable(next)){
+  // Utiliser ETAPES_ORDRE pour trouver la vraie étape suivante (gère 1b, 1c)
+  const idx = ETAPES_ORDRE.indexOf(etapeNum);
+  const next = idx >= 0 && idx < ETAPES_ORDRE.length - 1 ? ETAPES_ORDRE[idx + 1] : null;
+  if(next && ETAPES_DISPO.includes(next) && isEtapeJouable(next)){
     startEtape(next);
-  } else if(next){
+  } else if(next && ETAPES_DISPO.includes(next)){
     toast("⏳ L'étape suivante sera débloquée une fois celle-ci terminée.");
   } else {
     // France terminée (étape 20 complète) → proposer l'Espagne
-    if(etapeNum >= 20){
+    if(etapeNum === 20 || etapeNum >= 20){
       showEspagneInvitation();
     } else {
       toast("🐚 Toutes les étapes disponibles sont terminées ! Ultreia !");
