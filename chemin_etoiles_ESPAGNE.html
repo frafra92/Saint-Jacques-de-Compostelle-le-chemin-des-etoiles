@@ -141,7 +141,7 @@ button.chip.found{border-color:#5a4820;background:#1e1400;color:#d4b860}
 .rb-pelerin{background:#1a1000;border:1px solid #5a4a20;color:#c8a050}
 .qbody{padding:7px 13px 4px;flex-shrink:0}
 .qtag{font-family:'Cinzel',serif;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:9px;border:1px solid var(--b4);background:var(--bg);color:#a07840;display:inline-block;margin-bottom:4px}
-.qmeta{font-size:11px;color:#4a3010;margin-bottom:4px}
+.qmeta{display:none;font-size:11px;color:#4a3010;margin-bottom:4px}
 .qtxt{font-size:var(--fsl);color:var(--p);line-height:1.6}
 .anszone{padding:5px 13px;flex-shrink:0}
 button.qb{width:100%;text-align:left;padding:16px 18px;font-family:'Lora',serif;font-size:var(--fsl);line-height:1.6;border:none;border-left:4px solid var(--b4);border-radius:0 var(--rad) var(--rad) 0;background:var(--b2);color:var(--pd);cursor:pointer;transition:all .15s;margin-bottom:8px;display:block;-webkit-appearance:none;min-height:52px}
@@ -301,7 +301,8 @@ button.nb.show{display:block}
     min-height:56px;
     margin-bottom:6px;
   }
-  #qtxt{ font-size:20px !important; line-height:1.7 !important; }
+  .qtag{display:none!important}
+#qtxt{ font-size:20px !important; line-height:1.7 !important; }
   #qmeta,#qtag{ font-size:14px !important; }
   .anszone{ padding:8px 16px !important; gap:10px; display:flex; flex-direction:column; }
   .nb{ padding:18px 20px !important; font-size:18px !important; border-radius:30px !important; margin-bottom:8px !important; }
