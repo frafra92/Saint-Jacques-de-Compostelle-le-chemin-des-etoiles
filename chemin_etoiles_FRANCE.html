@@ -1243,14 +1243,6 @@ async function startEtape(num){
   qIdx=0; km=0; score=0; immunity=0; thrown=0;
   JUNK.forEach(j=>j.thrown=false);
   powers=[]; foundItems=[]; meteoShield=false; answered=false; elimCh=[];
-  // Bourdon : éliminer automatiquement 1 mauvais choix
-  if(bourdonActive && q.fmt==="qcm" && q.ch && q.ch.length>2){
-    const wrongs=q.ch.map((_,i)=>i).filter(i=>i!==q.ans);
-    if(wrongs.length>0){
-      const toElim=wrongs[Math.floor(Math.random()*wrongs.length)];
-      elimCh=[toElim];
-    }
-  }
 
   showLoading(false);
   showScreen("sg");
