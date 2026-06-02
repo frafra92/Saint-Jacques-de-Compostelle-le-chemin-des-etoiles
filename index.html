@@ -451,14 +451,14 @@ function saveProfil(){
 
   setProfil({ nom, ville, since: Date.now() });
   document.getElementById('profil-overlay').classList.remove('active');
-  toast('🐚 Bonjour ' + nom + ' ! Ultreia !');
-  renderPage();
+  // Redirection directe → pas de 2e clic nécessaire
+  window.location.href = 'chemin_etoiles_FRANCE.html';
 }
 
 function skipProfil(){
   setProfil({ nom:'Anonyme', ville:'', since:Date.now(), skip:true });
   document.getElementById('profil-overlay').classList.remove('active');
-  renderPage();
+  window.location.href = 'chemin_etoiles_FRANCE.html';
 }
 
 function changerProfil(){
