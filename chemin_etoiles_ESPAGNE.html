@@ -178,7 +178,7 @@ button.jc:hover{border-color:var(--or);color:var(--orl);background:#3a2000}
 .alico{font-size:24px;flex-shrink:0}
 .altit{font-family:'Cinzel',serif;font-size:13px;color:var(--p);margin-bottom:2px}
 .altxt{font-size:12px;color:var(--pd);line-height:1.5}
-.nextwrap{padding:5px 13px 6px;flex-shrink:0}
+.nextwrap{padding:10px 13px 14px;flex-shrink:0}
 button.nb{width:100%;padding:16px;font-family:'Cinzel',serif;font-size:var(--fsl);letter-spacing:1px;border:2px solid var(--ord);border-radius:26px;background:var(--b2);color:var(--orl);cursor:pointer;display:none;transition:all .2s;-webkit-appearance:none;margin-top:8px}
 button.nb:hover{background:var(--or);color:var(--bg);border-color:var(--or)}
 button.nb.show{display:block}
@@ -304,7 +304,8 @@ button.nb.show{display:block}
   #qtxt{ font-size:20px !important; line-height:1.7 !important; }
   #qmeta,#qtag{ font-size:14px !important; }
   .anszone{ padding:8px 16px !important; gap:10px; display:flex; flex-direction:column; }
-  .nb{ padding:20px !important; font-size:18px !important; border-radius:30px !important; }
+  .nb{ padding:18px 20px !important; font-size:18px !important; border-radius:30px !important; margin-bottom:8px !important; }
+  .nextwrap{ padding:10px 16px calc(16px + env(safe-area-inset-bottom, 0px)) !important; }
   #fbtit{ font-size:19px !important; }
   #fbexp{ font-size:16px !important; line-height:1.7 !important; }
 }
@@ -483,6 +484,9 @@ button.nb.show{display:block}
           <div style="font-size:9px;color:var(--ord);font-family:'Cinzel',serif;text-align:center">Balisage GR<br>Rouge &amp; Blanc</div>
         </div>
       </div>
+      <div class="nextwrap">
+        <button class="nb" id="nb" onclick="nextQ()">Continuer le chemin ›</button>
+      </div>
     </div>
   </div>
 
@@ -611,9 +615,6 @@ button.nb.show{display:block}
           <div><div class="altit" id="altit"></div><div class="altxt" id="altxt"></div></div>
         </div>
       </div>
-    </div>
-    <div class="nextwrap">
-      <button class="nb" id="nb" onclick="nextQ()">Continuer le chemin ›</button>
     </div>
   </div>
 </div>
