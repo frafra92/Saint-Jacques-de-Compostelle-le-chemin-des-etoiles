@@ -125,11 +125,11 @@ html,body{height:100%;font-family:'Lora',Georgia,serif;background:var(--bg);colo
 .bc{font-size:15px;filter:grayscale(1) brightness(.3);padding:1px;border-radius:3px;transition:all .2s;line-height:1}
 .bc.on{filter:none;background:rgba(210,160,50,.15);border:1px solid var(--ord);cursor:pointer}
 .bc.on:hover{transform:scale(1.15)}
-.sac{flex:1;overflow-y:auto;padding:0 8px 5px;min-height:0}
+.sac{flex:1;overflow-y:auto;padding:4px 10px 8px;min-height:0;border-top:1px solid var(--b3)}
 .sact{font-family:'Cinzel',serif;font-size:11px;color:var(--or);letter-spacing:.5px;margin-bottom:3px;margin-top:2px}
 .sach{font-size:10px;color:#3a2808;margin-bottom:3px}
 .chips{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px}
-button.chip{display:inline-flex;align-items:center;gap:3px;padding:4px 9px;border-radius:16px;font-size:13px;border:1px solid var(--b4);background:var(--b2);color:var(--pd);cursor:pointer;transition:all .15s;font-family:'Lora',serif;line-height:1;-webkit-appearance:none}
+button.chip{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:20px;font-size:15px;border:1px solid var(--b4);background:var(--b2);color:var(--pd);cursor:pointer;transition:all .15s;font-family:'Lora',serif;line-height:1;-webkit-appearance:none}
 button.chip:hover:not(:disabled){border-color:var(--or);color:var(--orl);background:var(--b3)}
 button.chip:disabled{opacity:.3;cursor:default;text-decoration:line-through}
 button.chip.pow{border-color:#285028;background:var(--gd);color:#80d880}
@@ -142,7 +142,7 @@ button.chip.found{border-color:#5a4820;background:#1e1400;color:#d4b860}
 .svb:hover{border-color:var(--or);color:var(--orl)}
 
 /* Col droite */
-.zbar{padding:5px 12px;display:flex;align-items:center;gap:7px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.5px;flex-shrink:0}
+.zbar{padding:3px 10px;display:flex;align-items:center;gap:5px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3px;flex-shrink:0;opacity:.7}
 .zf{background:#082206;border-bottom:1px solid #154010;color:#78d878}
 .zm{background:#1c1500;border-bottom:1px solid #4a3c00;color:#c8a030}
 .zh{background:#1c0606;border-bottom:1px solid #4a1414;color:#c87878}
@@ -166,7 +166,7 @@ button.chip.found{border-color:#5a4820;background:#1e1400;color:#d4b860}
 .qmeta{font-size:11px;color:#4a3010;margin-bottom:4px}
 .qtxt{font-size:var(--fsl);color:var(--p);line-height:1.6}
 .anszone{padding:5px 13px;flex-shrink:0}
-button.qb{width:100%;text-align:left;padding:14px 16px;font-family:'Lora',serif;font-size:var(--fsl);line-height:1.5;border:2px solid var(--b3);border-radius:var(--rad);background:var(--b2);color:var(--pd);cursor:pointer;transition:all .15s;margin-bottom:8px;display:block;-webkit-appearance:none;min-height:52px}
+button.qb{width:100%;text-align:left;padding:16px 18px;font-family:'Lora',serif;font-size:var(--fsl);line-height:1.6;border:none;border-left:4px solid var(--b4);border-radius:0 var(--rad) var(--rad) 0;background:var(--b2);color:var(--pd);cursor:pointer;transition:all .15s;margin-bottom:8px;display:block;-webkit-appearance:none;min-height:52px}
 button.qb:hover:not(:disabled){border-color:var(--ord);color:var(--orl);background:var(--b3)}
 button.qb.ok{background:#082008;border-color:#388038;color:#88dc88}
 button.qb.ko{background:#1c0606;border-color:#8a3030;color:#dc8888}
@@ -601,8 +601,8 @@ button.nb.show{display:block}
     </div>
     <div class="badges" id="badges"></div>
     <div class="sac">
-      <div class="sact">🎒 Sac — <span id="sacwt">12 kg</span> · <span id="vimm" style="color:#d09030">0 immunité</span></div>
-      <div class="sach">Jeter = +1 km + 1 immunité :</div>
+      <div class="sact" title="Poids du sac et immunités">🎒 <span id="sacwt">12 kg</span> · <span id="vimm" style="color:#d09030">0 🛡️</span></div>
+      
       <div class="chips" id="jchips"></div>
       <div class="sach" id="found-lbl" style="display:none;color:#a08040">Objets du chemin :</div>
       <div class="chips" id="found-chips"></div>
@@ -1458,12 +1458,15 @@ function renderBadges(){
   const all=getAllBadges();
   const row=document.getElementById("badges");row.innerHTML="";
   all.forEach(b=>{
+    if(!earned.has(b.id))return; // masquer les sellos non encore gagnés
     const el=document.createElement("span");
-    el.className="bc"+(earned.has(b.id)?" on":"");
+    el.className="bc on";
     el.textContent=b.ico;el.title=b.nom;
-    if(earned.has(b.id)){el.onclick=()=>showSelloDetail(b);}
+    el.onclick=()=>showSelloDetail(b);
     row.appendChild(el);
   });
+  // Masquer la zone badges si vide
+  row.style.display = row.children.length ? "flex" : "none";
 }
 function award(b){
   if(!b||earned.has(b.id))return;
