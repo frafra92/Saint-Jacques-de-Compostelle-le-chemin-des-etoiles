@@ -1888,7 +1888,7 @@ function renderQ(){
   setTimeout(scrollCRTop, 60);
   const qs=ETAPE?.questions||[];
   if(qIdx>=qs.length){showFin();return;}
-  const q=qs[qIdx];answered=false;elimCh=[];const _bnfr=document.getElementById("btn-next-fixed");if(_bnfr)_bnfr.classList.remove("show");
+  const q=qs[qIdx];answered=false;elimCh=[];setTimeout(()=>{const _cr=document.querySelector(".CR");if(_cr)_cr.scrollTo({top:0,behavior:"smooth"});},60);const _bnfr=document.getElementById("btn-next-fixed");if(_bnfr)_bnfr.classList.remove("show");
   const z=zoneOf(q.km);
   document.getElementById("zbar").className="zbar "+z.cls;
   document.getElementById("zico").textContent=z.ico;document.getElementById("zlbl").textContent=z.lbl;
@@ -1938,7 +1938,7 @@ function resolve(ok,km_q,q){
   document.getElementById("fbexp").textContent=q.expl;
   if(!ok)renderJP();
   rollAleaDisplay();
-  document.getElementById("nb").className="nb show";const _bnf=document.getElementById("btn-next-fixed");if(_bnf)_bnf.classList.add("show");setTimeout(()=>{const _fe=document.getElementById("fbexp");if(_fe)_fe.scrollIntoView({behavior:"smooth",block:"nearest"});},120);
+  document.getElementById("nb").className="nb show";const _bnf=document.getElementById("btn-next-fixed");if(_bnf)_bnf.classList.add("show");setTimeout(()=>{const _cr=document.querySelector(".CR");if(_cr)_cr.scrollTo({top:_cr.scrollHeight,behavior:"smooth"});},120);
   renderSac();checkFoundItems(km);
   // Scroll vers le feedback + bouton Continuer
   setTimeout(()=>{
