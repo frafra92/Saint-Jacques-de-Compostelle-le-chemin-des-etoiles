@@ -180,7 +180,7 @@ button.val{padding:9px 20px;font-family:'Cinzel',serif;font-size:14px;letter-spa
 button.val:hover:not(:disabled){border-color:var(--or);background:var(--b3)}
 button.val:disabled{opacity:.5;cursor:default}
 .fbwrap{flex:1;overflow-y:auto;padding:5px 13px 6px;min-height:0}
-.fb{border-radius:var(--rad);padding:9px 12px;font-size:var(--fs);line-height:1.65;display:none}
+.fb{border-radius:var(--rad);padding:9px 12px;font-size:var(--fs);line-height:1.65}
 .fb.show{display:block}
 .fb-bon{background:#082008;border:2px solid #285a28;color:#90dc90}
 .fb-mau{background:#1c0606;border:2px solid #5a2828;color:#dc9090}
@@ -1888,7 +1888,7 @@ function renderQ(){
   setTimeout(scrollCRTop, 60);
   const qs=ETAPE?.questions||[];
   if(qIdx>=qs.length){showFin();return;}
-  const q=qs[qIdx];answered=false;elimCh=[];setTimeout(()=>{const _cr=document.querySelector(".CR");if(_cr)_cr.scrollTo({top:0,behavior:"smooth"});},60);const _bnfr=document.getElementById("btn-next-fixed");if(_bnfr)_bnfr.classList.remove("show");
+  const q=qs[qIdx];answered=false;elimCh=[];const _fwr=document.querySelector(".fbwrap");if(_fwr)_fwr.style.display="none";setTimeout(()=>{const _cr=document.querySelector(".CR");if(_cr)_cr.scrollTo({top:0,behavior:"smooth"});},60);const _bnfr=document.getElementById("btn-next-fixed");if(_bnfr)_bnfr.classList.remove("show");
   const z=zoneOf(q.km);
   document.getElementById("zbar").className="zbar "+z.cls;
   document.getElementById("zico").textContent=z.ico;document.getElementById("zlbl").textContent=z.lbl;
@@ -1938,7 +1938,7 @@ function resolve(ok,km_q,q){
   document.getElementById("fbexp").textContent=q.expl;
   if(!ok)renderJP();
   rollAleaDisplay();
-  document.getElementById("nb").className="nb show";const _bnf=document.getElementById("btn-next-fixed");if(_bnf)_bnf.classList.add("show");setTimeout(()=>{const _cr=document.querySelector(".CR");if(_cr)_cr.scrollTo({top:_cr.scrollHeight,behavior:"smooth"});},120);
+  const _fws=document.querySelector(".fbwrap");if(_fws)_fws.style.display="";document.getElementById("nb").className="nb show";const _bnf=document.getElementById("btn-next-fixed");if(_bnf)_bnf.classList.add("show");setTimeout(()=>{const _cr=document.querySelector(".CR");if(_cr)_cr.scrollTo({top:_cr.scrollHeight,behavior:"smooth"});},120);
   renderSac();checkFoundItems(km);
   // Scroll vers le feedback + bouton Continuer
   setTimeout(()=>{
