@@ -1687,7 +1687,7 @@ function resolve(ok,km_q,q){
   document.getElementById("fbexp").textContent=q.expl;
   if(!ok)renderJP();
   rollAleaDisplay();
-  document.getElementById("nb").className="nb show";const _bnf=document.getElementById("btn-next-fixed");if(_bnf)_bnf.classList.add("show");setTimeout(()=>{const _fe=document.getElementById("fbexp");if(_fe)_fe.scrollIntoView({behavior:"smooth",block:"nearest"});},120);setTimeout(()=>scrollCRTo("nb","bottom"),100);
+  document.getElementById("nb").className="nb show";const _bnf=document.getElementById("btn-next-fixed");if(_bnf)_bnf.classList.add("show");setTimeout(()=>{const _cr=document.querySelector(".CR");if(_cr)_cr.scrollTo({top:_cr.scrollHeight,behavior:"smooth"});},120);setTimeout(()=>scrollCRTo("nb","bottom"),100);
   renderSac();checkFoundItems(km);
 }
 function renderJP(){
