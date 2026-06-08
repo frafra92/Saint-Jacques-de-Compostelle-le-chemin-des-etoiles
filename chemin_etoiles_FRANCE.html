@@ -1281,7 +1281,7 @@ function showEspagneInvitation(){
 }
 
 function startNextEtape(){
-  const next = ETAPES_DISPO.find(n => n > etapeNum);
+  const next = etapeSuivante(etapeNum);
   if(next && isEtapeJouable(next)){
     startEtape(next);
   } else if(next){
