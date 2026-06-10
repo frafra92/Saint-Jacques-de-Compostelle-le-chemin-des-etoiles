@@ -144,7 +144,7 @@ button.chip.found{border-color:#5a4820;background:#1e1400;color:#d4b860}
 .adbtn{font-size:10px;padding:3px 8px;border:1px solid var(--b4);border-radius:10px;background:transparent;color:var(--gl2);cursor:pointer;font-family:'Cinzel',serif;border-color:var(--gl2)}
 .vol{flex:1;accent-color:var(--or);height:13px}
 .svrow{padding:3px 8px 4px;display:flex;gap:3px;flex-shrink:0}
-.svb{flex:1;padding:4px 2px;font-family:'Cinzel',serif;font-size:9px;background:var(--b2);border:1px solid var(--b3);border-radius:5px;color:var(--ord);cursor:pointer;transition:all .15s;text-align:center}
+.svb{display:none!important}
 .svb:hover{border-color:var(--or);color:var(--orl)}
 
 /* Col droite */
@@ -1327,6 +1327,18 @@ function shareGame(){
 /* ════════════════════════════════════════════════════
    SAUVEGARDE
 ════════════════════════════════════════════════════ */
+function autoSave(){
+  try{
+    localStorage.setItem("cdv9",JSON.stringify({
+      etapeNum, qIdx, km, score, immunity, thrown, meteoShield,
+      junk:JUNK.map(j=>j.thrown),
+      powers:powers.map(p=>({id:p.id,used:p.used})),
+      badges:[...earned],
+      found:foundItems.map(f=>f.id),
+      progEtapes,
+    }));
+  }catch(e){}
+}
 function saveGame(){
   try{
     localStorage.setItem("cdv9",JSON.stringify({
@@ -1348,8 +1360,14 @@ function loadGame(){
     progEtapes=sv.progEtapes||{};
     JUNK.forEach((j,i)=>{if(sv.junk&&sv.junk[i]!==undefined)j.thrown=sv.junk[i];});
     powers=(sv.powers||[]).map(sp=>{const d=PDEFS.find(x=>x.id===sp.id);return d?{...d,used:sp.used}:null;}).filter(Boolean);
-    // Restaurer l'état et relancer l'étape
-    const savedEtape = sv.etapeNum||1;
+    // Restaurer l'état et relancer l'étape (validation: étape France uniquement)
+    let savedEtape = sv.etapeNum||1;
+    if(!ETAPES_ORDRE.includes(savedEtape)){
+      // Sauvegarde polluée (ex: étape Espagne) → reprendre à la dernière étape France terminée
+      let last=1;
+      for(const n of ETAPES_ORDRE){ if(isEtapeTerminee(n)) last=n; else break; }
+      savedEtape = isEtapeTerminee(last) ? (etapeSuivante(last)||last) : last;
+    }
     startEtape(savedEtape).then(()=>{
       qIdx=sv.qIdx||0;km=sv.km||0;score=sv.score||0;
       immunity=sv.immunity||0;thrown=sv.thrown||0;
@@ -1942,7 +1960,7 @@ function resolve(ok,km_q,q){
   document.getElementById("fbexp").textContent=q.expl;
   if(!ok)renderJP();
   rollAleaDisplay();
-  const _fws=document.querySelector(".fbwrap");if(_fws)_fws.style.display="";document.getElementById("nb").className="nb show";const _bnf=document.getElementById("btn-next-fixed");if(_bnf)_bnf.classList.add("show");setTimeout(()=>{const _cr=document.querySelector(".CR");if(_cr)_cr.scrollTo({top:_cr.scrollHeight,behavior:"smooth"});},120);
+  const _fws=document.querySelector(".fbwrap");if(_fws)_fws.style.display="";autoSave();document.getElementById("nb").className="nb show";const _bnf=document.getElementById("btn-next-fixed");if(_bnf)_bnf.classList.add("show");setTimeout(()=>{const _cr=document.querySelector(".CR");if(_cr)_cr.scrollTo({top:_cr.scrollHeight,behavior:"smooth"});},120);
   renderSac();checkFoundItems(km);
   // Scroll vers le feedback + bouton Continuer
   setTimeout(()=>{
@@ -2013,7 +2031,31 @@ function toast(msg,dur=3200){const t=document.getElementById("toast");t.textCont
 /* ════════════════════════════════════════════════════
    INITIALISATION
 ════════════════════════════════════════════════════ */
+function migrerSauvegarde(){
+  // Répare cdv9 si pollué par l'ancien bug (Espagne écrivait dedans)
+  try{
+    const fr=JSON.parse(localStorage.getItem("cdv9")||"null");
+    if(!fr) return;
+    const pollue = (typeof fr.etapeNum==="number" && fr.etapeNum>=21)
+      || Object.keys(fr.progEtapes||{}).some(k=>parseInt(k)>=21);
+    if(pollue){
+      // Sauver la partie Espagne dans cdv9_es si pas déjà fait
+      if(!localStorage.getItem("cdv9_es")){
+        const esProg={};
+        Object.keys(fr.progEtapes||{}).forEach(k=>{if(parseInt(k)>=21)esProg[k]=fr.progEtapes[k];});
+        localStorage.setItem("cdv9_es",JSON.stringify({...fr,progEtapes:esProg}));
+      }
+      // Nettoyer la France
+      const frProg={};
+      Object.keys(fr.progEtapes||{}).forEach(k=>{if(!(parseInt(k)>=21))frProg[k]=fr.progEtapes[k];});
+      if(!frProg[20]||!frProg[20].km||frProg[20].km<25)frProg[20]={km:25};
+      localStorage.setItem("cdv9",JSON.stringify({...fr,etapeNum:20,progEtapes:frProg}));
+    }
+  }catch(e){}
+}
+
 function init(){
+  migrerSauvegarde();
   // Charger la sauvegarde pour la progression
   try{
     const sv=JSON.parse(localStorage.getItem("cdv9")||"null");
