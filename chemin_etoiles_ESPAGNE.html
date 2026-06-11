@@ -318,6 +318,113 @@ button.nb.show{display:block}
 #btn-next-fixed{display:none;position:fixed;top:50%;right:10px;transform:translateY(-50%);width:90px;height:90px;border-radius:14px;background:none;border:none;padding:0;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:200;-webkit-appearance:none;}
 #btn-next-fixed.show{display:flex;align-items:center;justify-content:center;}
 #btn-next-fixed:active{transform:translateY(-50%) scale(.92);}
+
+/* ════════════════════════════════════════════════════
+   REFONTE VISUELLE SENIOR-FRIENDLY — v47
+   CSS additif uniquement — ne modifie aucune logique
+════════════════════════════════════════════════════ */
+
+/* ── Boutons de réponse : grands, ronds, tactiles ── */
+.qb{
+  padding:20px 22px !important;
+  font-size:21px !important;
+  line-height:1.55 !important;
+  border-radius:16px !important;
+  min-height:64px !important;
+  margin-bottom:10px !important;
+  border:2px solid #5a4a30 !important;
+  background:linear-gradient(180deg,#2a2014,#221a10) !important;
+  box-shadow:0 2px 8px rgba(0,0,0,.35) !important;
+  transition:transform .12s, border-color .15s !important;
+  -webkit-tap-highlight-color:transparent;
+}
+.qb:active{ transform:scale(.985) !important; }
+
+/* Réponse correcte : VERT très visible */
+.qb.ok{
+  background:linear-gradient(180deg,#0d3d12,#0a2e0e) !important;
+  border-color:#3fa84a !important;
+  color:#a8e8ae !important;
+  box-shadow:0 0 0 3px rgba(63,168,74,.35), 0 2px 10px rgba(0,0,0,.4) !important;
+}
+/* Réponse fausse choisie : ROUGE doux */
+.qb.ko{
+  background:linear-gradient(180deg,#3d100d,#2e0c0a) !important;
+  border-color:#c0504a !important;
+  color:#e8a8a4 !important;
+}
+
+/* ── Question : grande, contrastée ── */
+#qtxt{
+  font-size:23px !important;
+  line-height:1.6 !important;
+  color:#f5ead5 !important;
+  font-weight:500 !important;
+}
+
+/* ── Encart réponse : gros texte lisible ── */
+#fbtit{ font-size:22px !important; }
+#fbexp{ font-size:19px !important; line-height:1.75 !important; }
+
+/* ── Bouton TTS 🔊 : grand et tactile ── */
+.tts-btn{
+  font-size:24px !important;
+  padding:8px 16px !important;
+  min-width:52px !important;
+  min-height:44px !important;
+  border-radius:24px !important;
+  border:2px solid #6a5a40 !important;
+}
+
+/* ── Stats du haut : épurées ── */
+.stl{ font-size:10px !important; letter-spacing:1px !important; opacity:.7; }
+.stv{ font-size:18px !important; font-weight:600 !important; }
+.st{ border-radius:12px !important; }
+
+/* ── Scène : texte plus lisible ── */
+.scene-txt{ font-size:18px !important; line-height:1.65 !important; }
+.scene-lieu{ font-size:12px !important; }
+
+/* ── Sac & chips : plus tactiles ── */
+.chip{
+  padding:12px 18px !important;
+  font-size:16px !important;
+  border-radius:24px !important;
+  min-height:48px !important;
+}
+
+/* ── Écran de fin d'étape : festif ── */
+.fint{ font-size:26px !important; }
+.fintxt{ font-size:18px !important; line-height:1.7 !important; }
+.finb button, .finb a{
+  min-height:60px !important;
+  font-size:19px !important;
+  border-radius:30px !important;
+}
+
+/* ── Boutons d'accueil : gros et ronds ── */
+.btn{
+  min-height:60px !important;
+  font-size:19px !important;
+  border-radius:30px !important;
+  padding:16px 28px !important;
+}
+
+/* ── iPhone (≤600px) : maximiser l'espace de jeu ── */
+@media(max-width:600px){
+  .qb{ font-size:20px !important; padding:18px 18px !important; }
+  #qtxt{ font-size:21px !important; }
+  .stv{ font-size:16px !important; }
+  .map-svg{ height:48px !important; }
+}
+
+/* ── iPad (601-1024px) : encore plus grand ── */
+@media(min-width:601px) and (max-width:1024px){
+  .qb{ font-size:23px !important; padding:22px 26px !important; min-height:72px !important; }
+  #qtxt{ font-size:26px !important; }
+  #fbexp{ font-size:21px !important; }
+  .scene-txt{ font-size:20px !important; }
+}
 </style>
 </head>
 <body>
