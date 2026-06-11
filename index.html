@@ -409,17 +409,17 @@ h1 {
   </div>
 
   <!-- BOUTON JOUER PRINCIPAL -->
-  <a class="btn-play" id="btn-jouer" href="chemin_etoiles_FRANCE.html?v=46">
+  <a class="btn-play" id="btn-jouer" href="chemin_etoiles_FRANCE.html?v=47">
     <span class="ico-btn">🚶</span> <span id="btn-jouer-txt">Commencer le pèlerinage</span>
   </a>
 
   <!-- BOUTONS SECONDAIRES -->
   <div class="btns-row">
     <a class="btn-sec" href="leaderboard.html">🏆 Classement</a>
-    <a class="btn-sec" id="btn-autre" href="chemin_etoiles_ESPAGNE.html?v=37" style="display:none">
+    <a class="btn-sec" id="btn-autre" href="chemin_etoiles_ESPAGNE.html?v=38" style="display:none">
       🇪🇸 Jouer l'Espagne
     </a>
-    <a class="btn-sec" id="btn-france-aussi" href="chemin_etoiles_FRANCE.html?v=46" style="display:none">
+    <a class="btn-sec" id="btn-france-aussi" href="chemin_etoiles_FRANCE.html?v=47" style="display:none">
       🇫🇷 Rejouer la France
     </a>
   </div>
@@ -452,13 +452,13 @@ function saveProfil(){
   setProfil({ nom, ville, since: Date.now() });
   document.getElementById('profil-overlay').classList.remove('active');
   // Redirection directe → pas de 2e clic nécessaire
-  window.location.href = 'chemin_etoiles_FRANCE.html?v=46';
+  window.location.href = 'chemin_etoiles_FRANCE.html?v=47';
 }
 
 function skipProfil(){
   setProfil({ nom:'Anonyme', ville:'', since:Date.now(), skip:true });
   document.getElementById('profil-overlay').classList.remove('active');
-  window.location.href = 'chemin_etoiles_FRANCE.html?v=46';
+  window.location.href = 'chemin_etoiles_FRANCE.html?v=47';
 }
 
 function changerProfil(){
@@ -545,7 +545,7 @@ function renderPage(){
 
   } else if(frTermine || nbES > 0){
     // France terminée OU Espagne en cours → aller à l'Espagne
-    btnJouer.href = 'chemin_etoiles_ESPAGNE.html?v=37';
+    btnJouer.href = 'chemin_etoiles_ESPAGNE.html?v=38';
     btnTxt.innerHTML = nbES > 0
       ? '🇪🇸 Reprendre l\'Espagne — Étape ' + (nbES + 1)
       : '🇪🇸 Commencer l\'Espagne !';
@@ -554,15 +554,15 @@ function renderPage(){
 
   } else if(nbFR > 0){
     // France en cours
-    btnJouer.href = 'chemin_etoiles_FRANCE.html?v=46';
+    btnJouer.href = 'chemin_etoiles_FRANCE.html?v=47';
     btnTxt.innerHTML = '🇫🇷 Reprendre la France — Étape ' + (nbFR + 1);
     btnAutre.style.display = 'flex';
-    btnAutre.href = 'chemin_etoiles_ESPAGNE.html?v=37';
+    btnAutre.href = 'chemin_etoiles_ESPAGNE.html?v=38';
     btnFrAussi.style.display = 'none';
 
   } else {
     // Jamais joué
-    btnJouer.href = 'chemin_etoiles_FRANCE.html?v=46';
+    btnJouer.href = 'chemin_etoiles_FRANCE.html?v=47';
     btnTxt.innerHTML = '🚶 Commencer le pèlerinage';
     btnAutre.style.display = 'none';
     btnFrAussi.style.display = 'none';
