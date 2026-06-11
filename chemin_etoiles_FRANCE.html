@@ -89,7 +89,7 @@ html,body{height:100%;font-family:'Lora',Georgia,serif;background:var(--bg);colo
 
 @media(max-width:600px){
   #sg{flex-direction:column}
-  .CL{width:100%;flex-shrink:0;height:auto;max-height:36vh;overflow-y:auto;border-right:none;border-bottom:1px solid var(--b3)}
+  .CL{width:100%;flex-shrink:0;height:auto;max-height:28vh;overflow-y:auto;border-right:none;border-bottom:1px solid var(--b3)}
   .CR{flex:1;overflow-y:auto}
 }
 
@@ -2067,7 +2067,7 @@ function resolve(ok,km_q,q){
   document.getElementById("fbexp").textContent=q.expl;
   if(!ok)renderJP();
   rollAleaDisplay();
-  const _fws=document.querySelector(".fbwrap");if(_fws)_fws.style.display="";autoSave();document.getElementById("nb").className="nb show";const _bnf=document.getElementById("btn-next-fixed");if(_bnf)_bnf.classList.add("show");setTimeout(()=>{const _cr=document.querySelector(".CR");if(_cr)_cr.scrollTo({top:_cr.scrollHeight,behavior:"smooth"});},120);
+  const _fws=document.querySelector(".fbwrap");if(_fws)_fws.style.display="";autoSave();document.getElementById("nb").className="nb show";const _bnf=document.getElementById("btn-next-fixed");if(_bnf)_bnf.classList.add("show");setTimeout(()=>{const _fb=document.getElementById("fb");if(_fb)_fb.scrollIntoView({behavior:"smooth",block:"start"});const _cr=document.querySelector(".CR");if(_cr)_cr.scrollTo({top:_cr.scrollHeight,behavior:"smooth"});},180);
   renderSac();checkFoundItems(km);
   // Scroll vers le feedback + bouton Continuer
   setTimeout(()=>{
