@@ -1,0 +1,23 @@
+{
+  "name": "Le Chemin des Étoiles",
+  "short_name": "Chemin Étoiles",
+  "description": "Pèlerinage quiz de Paris à Saint-Jacques-de-Compostelle",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#0e0900",
+  "theme_color": "#1a3fa8",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
